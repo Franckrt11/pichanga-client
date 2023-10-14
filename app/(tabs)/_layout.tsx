@@ -1,55 +1,108 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs } from 'expo-router';
-import { Pressable, useColorScheme } from 'react-native';
+import { Tabs } from "expo-router/tabs";
+import { StyleSheet } from "react-native";
+import Colors from "@/src/utils/Colors";
+import HomeIcon from "@/src/components/icons/home-icon";
+import FieldIcon from "@/src/components/icons/field-icon";
+import CalendarBubble from "@/src/components/icons/calendar-bubble";
+import ChatIcon from "@/src/components/icons/chat-icon";
+import BellIcon from "@/src/components/icons/bell-icon";
+import Logo from "@/src/components/header/logo";
+import Options from "@/src/components/header/options";
 
-import Colors from '../../constants/Colors';
-
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-}
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+const TabsLayout = () => {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-      }}>
+        headerShown: true,
+        headerLeft: () => <Logo />,
+        headerStyle: { backgroundColor: "white", borderBottomWidth: 0 },
+        tabBarStyle: styles.tabBar,
+        tabBarActiveTintColor: "white",
+        tabBarInactiveTintColor: Colors.maastrichtBlue,
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
+          headerTitle: () => <></>,
+          tabBarLabelStyle: styles.tabBarLabel,
+          tabBarLabel: "INICIO",
+          tabBarIcon: ({ focused, color }) => (
+            <HomeIcon active={focused} color={color} />
+          ),
+          headerRight: () => <Options />,
+        }}
+      />
+      {/* <Tabs.Screen
+        name="fields"
+        options={{
+          headerTitle: () => <></>,
+          tabBarLabelStyle: styles.tabBarLabel,
+          tabBarLabel: "CANCHAS",
+          tabBarIcon: ({ focused, color }) => (
+            <FieldIcon active={focused} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="bookings"
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          headerTitle: () => <></>,
+          tabBarLabelStyle: styles.tabBarLabel,
+          tabBarLabel: "RESERVAS",
+          tabBarIcon: ({ focused, color }) => (
+            <CalendarBubble active={focused} color={color} />
+          ),
+          headerRight: () => <BookingControl />,
         }}
       />
+      <Tabs.Screen
+        name="chat"
+        options={{
+          headerTitle: () => <></>,
+          tabBarLabelStyle: styles.tabBarLabel,
+          tabBarLabel: "CHAT",
+          tabBarIcon: ({ focused, color }) => (
+            <ChatIcon active={focused} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="activity"
+        options={{
+          headerTitle: () => <></>,
+          tabBarLabelStyle: styles.tabBarLabel,
+          tabBarLabel: "ACTIVIDAD",
+          tabBarIcon: ({ focused, color }) => (
+            <BellIcon active={focused} color={color} />
+          ),
+        }}
+      /> */}
     </Tabs>
   );
-}
+};
+
+export default TabsLayout;
+
+const styles = StyleSheet.create({
+  tabIcon: {
+    color: Colors.maastrichtBlue,
+    backgroundColor: "white",
+    borderRadius: 20,
+    height: 30,
+    width: 30,
+    textAlign: "center",
+    borderColor: Colors.maastrichtBlue,
+    borderWidth: 1,
+  },
+  tabBar: {
+    backgroundColor: Colors.maastrichtBlue,
+    borderTopWidth: 5,
+  },
+  tabBarLabel: {
+    color: "white",
+    marginBottom: 10,
+    fontSize: 9,
+    fontFamily: "PoppinsMedium",
+  },
+});
