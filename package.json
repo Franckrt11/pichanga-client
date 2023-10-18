@@ -1,21 +1,25 @@
 {
   "name": "pichanga-client",
-  "main": "expo-router/entry",
   "version": "1.0.0",
+  "private": true,
+  "main": "expo-router/entry",
   "scripts": {
-    "start": "expo start",
     "android": "expo start --android",
     "build:android-device": "expo run:android -d",
     "build:android-emulator": "expo run:android",
     "build:apk": "npx eas-cli build -p android --profile preview",
     "ios": "expo start --ios",
-    "web": "expo start --web",
-    "test": "jest --watchAll",
     "nuke": "rimraf node_modules package-lock.json",
-    "sort-package": "npx sort-package-json"
+    "sort-package": "npx sort-package-json",
+    "start": "expo start",
+    "test": "jest --watchAll",
+    "web": "expo start --web"
   },
   "jest": {
     "preset": "jest-expo"
+  },
+  "resolutions": {
+    "react-refresh": "~0.14.0"
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
@@ -59,9 +63,5 @@
   },
   "overrides": {
     "react-refresh": "~0.14.0"
-  },
-  "resolutions": {
-    "react-refresh": "~0.14.0"
-  },
-  "private": true
+  }
 }
