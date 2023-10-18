@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { Stack, router } from "expo-router";
-import { Image } from 'expo-image';
+import { Image } from "expo-image";
 import Icon from "react-native-vector-icons/Feather";
 import {
   BottomSheetView,
@@ -95,7 +95,7 @@ const User = () => {
       state.id
     );
     if (response.status) {
-      Alert.alert("Profile guardado.");
+      Alert.alert("Perfil de usuario guardado.");
       dispatch({
         type: "change",
         payload: response.data,
@@ -153,7 +153,7 @@ const User = () => {
         />
         <ScrollView
           style={{ paddingTop: 20 }}
-          contentContainerStyle={{ alignItems: "center"}}
+          contentContainerStyle={{ alignItems: "center" }}
         >
           <BottomSheetModal
             ref={bottomSheetModalRef}
@@ -297,7 +297,7 @@ const User = () => {
                 </Text>
               </Pressable>
             </View>
-            <View style={{ width: "100%" }}>
+            <View style={{ width: "100%", marginBottom: 50 }}>
               <Pressable
                 onPress={() => saveProfile()}
                 style={[styles.button, { backgroundColor: Colors.metallicGreen }]}

@@ -86,7 +86,6 @@ export const AuthProvider = ({ children }: ProviderProps) => {
 
   const signUp = async (data: RegisterUserData) => {
     // TODO: Implementar validación
-    console.log("🚀 ~ signUp ~ data:", data);
     setLoading(true);
     try {
       const response = await fetchRegister(data);
@@ -134,9 +133,8 @@ export const AuthProvider = ({ children }: ProviderProps) => {
 
       if (userId !== null && typeof userId !== "undefined") {
         const response = await fetchUser(userId, userToken);
-        console.log("🚀 ~ file: Auth.tsx:137 ~ isLoggedIn ~ response:", response)
         if (response.status) {
-          await dispatch({
+          dispatch({
             type: "change",
             payload: response.data,
           });
