@@ -4,12 +4,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useUserContext } from "./User";
 import { fetchLogin, fetchRegister, fetchUser, fetchNewPassword } from "@/src/models/Auth";
 import { fetchConfigAll } from "@/src/models/Config";
-import { FetchUserData, ProviderProps } from "@/src/utils/Types";
+import { RegisterUserData, ProviderProps } from "@/src/utils/Types";
 
 interface IAuthContext {
-  signIn: (email: string, password: string) => Promise<void>;
+  signIn: (username: string, password: string) => Promise<void>;
   signOut: () => void;
-  signUp: (data: FetchUserData) => Promise<void>;
+  signUp: (data: RegisterUserData) => Promise<void>;
   newPassword: (email: string, oldPassword: string, newPassword: string) => Promise<void>;
   token: string | null;
   loading: boolean;
@@ -44,22 +44,17 @@ export const AuthProvider = ({ children }: ProviderProps) => {
   const [config, setConfig] = useState(null);
   const { dispatch } = useUserContext();
 
-  const loadConfig = async (token: string | null) => {
+  const loadConfig = async (token: string) => {
     const response = await fetchConfigAll(token);
     if (response.status) {
       setConfig(response.data);
     }
   };
 
-  const signIn = async (email: string, password: string) => {
-    if (!email || !password) {
-      alert("No data en inputs");
-      return;
-    }
-
+  const signIn = async (username: string, password: string) => {
     setLoading(true);
     try {
-      const response = await fetchLogin(email, password);
+      const response = await fetchLogin(username, password);
 
       if (response.status) {
         setToken(response.token);
@@ -71,8 +66,8 @@ export const AuthProvider = ({ children }: ProviderProps) => {
         });
         await loadConfig(response.token);
       } else {
-        setErrors(response.messages);
-        console.log("Error", response.messages);
+        setErrors(response.errors);
+        console.log("fetchLogin Error", response.errors);
       }
     } catch (error) {
       console.log("🚩 ~ context/Auth.js ~ signIn() ~ error:", error);
@@ -85,19 +80,13 @@ export const AuthProvider = ({ children }: ProviderProps) => {
     setToken(null);
     AsyncStorage.removeItem("token");
     AsyncStorage.removeItem("userId");
-    dispatch({ type: "delete", payload: null });
+    dispatch({ type: "delete" });
     setLoading(false);
   };
 
-  const signUp = async (data: FetchUserData) => {
-    if (!data.checkbox) {
-      alert("Aceptar terminos");
-      return;
-    }
-    if (!data.email || !data.password) {
-      alert("No data en inputs");
-      return;
-    }
+  const signUp = async (data: RegisterUserData) => {
+    // TODO: Implementar validación
+    console.log("🚀 ~ signUp ~ data:", data);
     setLoading(true);
     try {
       const response = await fetchRegister(data);
@@ -112,8 +101,8 @@ export const AuthProvider = ({ children }: ProviderProps) => {
         });
         setErrors(null);
       } else {
-        setErrors(response.messages);
-        console.log("Error", response.messages);
+        setErrors(response.errors);
+        console.log("fetchRegister Error", response.errors);
       }
     } catch (error) {
       console.log("🚩 ~ context/Auth.js ~ signOut() ~ error:", error);
@@ -140,17 +129,19 @@ export const AuthProvider = ({ children }: ProviderProps) => {
 
       if (userToken !== null && typeof userToken !== "undefined") {
         setToken(userToken);
+        await loadConfig(userToken);
       }
 
       if (userId !== null && typeof userId !== "undefined") {
         const response = await fetchUser(userId, userToken);
-        dispatch({
-          type: "change",
-          payload: response.data,
-        });
+        console.log("🚀 ~ file: Auth.tsx:137 ~ isLoggedIn ~ response:", response)
+        if (response.status) {
+          await dispatch({
+            type: "change",
+            payload: response.data,
+          });
+        }
       }
-
-      await loadConfig(userToken);
     } catch (error) {
       console.log("🚩 ~ context/Auth.js ~ isLoggedIn() ~ error:", error);
     }

@@ -21,8 +21,8 @@ export const LayoutStyles = StyleSheet.create({
   },
   whiteContainer: {
     backgroundColor: Colors.white,
-    justifyContent: "flex-start",
-    flex: 1
+    flex: 1,
+    justifyContent: "center"
   },
   scrollContainer: {
     alignItems: "center",

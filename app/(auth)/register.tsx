@@ -4,15 +4,18 @@ import {
   Text,
   View,
   Platform,
+  StyleSheet
 } from "react-native";
 import { useState } from "react";
 import { Link } from "expo-router";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import { Picker } from "@react-native-picker/picker";
 import { useAuthContext } from "@/src/context/Auth";
 import { LayoutStyles, PageStyles } from "@/src/utils/Styles";
 import Colors from "@/src/utils/Colors";
 import ChildPage from "@/src/components/layouts/child-page";
 import Input from "@/src/components/input";
+import { LIMA_DISTRICTS } from "@/src/utils/Constants";
 
 const CheckboxText = () => {
   return (
@@ -35,9 +38,11 @@ const CheckboxText = () => {
 };
 
 const Register = () => {
-  const [ruc, setRuc] = useState("");
   const [name, setName] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [district, setDistrict] = useState("");
   const [password, setPassword] = useState("");
   const [password_confirmation, setPasswordConfirmation] = useState("");
   const [checkbox, setCheckbox] = useState(false);
@@ -48,7 +53,7 @@ const Register = () => {
       <View style={{ marginBottom: 30 }}>
         <Text style={LayoutStyles.pageTitle}>REGISTRO</Text>
         <Input
-          placeholder="Razón social"
+          placeholder="Nombre"
           value={name}
           onChangeText={(text: string) => setName(text)}
           styles={PageStyles.input}
@@ -56,13 +61,21 @@ const Register = () => {
           error={errors ? errors.name : null}
         />
         <Input
-          placeholder="R.U.C."
-          value={ruc}
-          onChangeText={(text: string) => setRuc(text)}
+          placeholder="Apellido"
+          value={lastname}
+          onChangeText={(text: string) => setLastname(text)}
+          styles={PageStyles.input}
+          theme="light"
+          error={errors ? errors.lastname : null}
+        />
+        <Input
+          placeholder="Número de celular"
+          value={phone}
+          onChangeText={(text: string) => setPhone(text)}
           styles={PageStyles.input}
           theme="light"
           keyboardType="numeric"
-          error={errors ? errors.ruc : null}
+          error={errors ? errors.phone : null}
         />
         <Input
           placeholder="Correo electrónico"
@@ -73,6 +86,19 @@ const Register = () => {
           keyboardType="email-address"
           error={errors ? errors.email : null}
         />
+        <View style={[PageStyles.pickerContainer, { marginBottom: 5 }]}>
+          <Picker
+            style={PageStyles.picker}
+            selectedValue={district}
+            onValueChange={(value, itemIndex) => setDistrict(value)}
+          >
+            <Picker.Item fontFamily="PoppinsMedium" label="Distritos" value="" />
+            {LIMA_DISTRICTS.map((district, index) => (
+              <Picker.Item fontFamily="PoppinsMedium" key={index} label={district} value={district} />
+            ))}
+          </Picker>
+        </View>
+        {errors?.district ? <Text style={styles.errorMessages}>{errors.district}</Text> : <View style={{ marginBottom: 15}}/>}
         <Input
           placeholder="Contraseña"
           value={password}
@@ -97,8 +123,9 @@ const Register = () => {
           textComponent={<CheckboxText />}
           onPress={() => setCheckbox(!checkbox)}
         />
+        {errors?.checkbox ? <Text style={styles.errorMessages}>{errors.checkbox}</Text> : null}
       </View>
-      <View>
+      <View style={{ marginBottom: 30, width: "100%" }}>
         {loading ? (
           <ActivityIndicator size={"large"} />
         ) : (
@@ -106,13 +133,13 @@ const Register = () => {
             onPress={() =>
               signUp({
                 name,
-                ruc,
+                lastname,
+                phone,
                 email,
+                district,
                 password,
                 password_confirmation,
-                checkbox,
-                status: false,
-                photo: null
+                checkbox
               })
             }
             style={PageStyles.button}
@@ -126,3 +153,12 @@ const Register = () => {
 };
 
 export default Register;
+
+const styles = StyleSheet.create({
+  errorMessages: {
+    fontSize: 12,
+    fontFamily: "PoppinsMedium",
+    color: "red",
+    marginBottom: 15,
+  },
+});

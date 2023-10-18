@@ -11,7 +11,6 @@ import { LayoutStyles } from "@/src/utils/Styles";
 import Colors from "@/src/utils/Colors";
 
 const Home = () => {
-
   return (
     <SafeAreaView
       style={LayoutStyles.whiteContainer}

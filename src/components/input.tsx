@@ -16,7 +16,6 @@ interface InputProps {
   error?: [];
   password?: boolean;
   onChangeText: (text: string) => void;
-  // onFocus: () => void;
   styles: StyleProp<TextStyle>;
   theme: string;
   keyboardType?: string;
@@ -28,13 +27,10 @@ const Input = ({
   error,
   password,
   onChangeText = (text: string) => {},
-  // onFocus = () => {},
   styles,
   theme,
-}: // ...props
-InputProps) => {
+}: InputProps) => {
   const [hidePassword, setHidePassword] = useState(password);
-  // const [isFocused, setIsFocused] = useState(false);
   const errorColor = theme === "light" ? "red" : "white";
 
   return (
@@ -48,15 +44,9 @@ InputProps) => {
         value={value}
         onChangeText={onChangeText}
         autoCorrect={false}
-        // onFocus={() => {
-        //   onFocus();
-        //   setIsFocused(true);
-        // }}
-        // onBlur={() => setIsFocused(false)}
         secureTextEntry={hidePassword}
         style={styles}
         placeholder={placeholder}
-        // {...props}
       />
       {password && (
         <Icon

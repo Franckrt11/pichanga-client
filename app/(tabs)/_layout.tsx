@@ -33,7 +33,7 @@ const TabsLayout = () => {
           headerRight: () => <Options />,
         }}
       />
-      {/* <Tabs.Screen
+      <Tabs.Screen
         name="fields"
         options={{
           headerTitle: () => <></>,
@@ -53,7 +53,7 @@ const TabsLayout = () => {
           tabBarIcon: ({ focused, color }) => (
             <CalendarBubble active={focused} color={color} />
           ),
-          headerRight: () => <BookingControl />,
+          // headerRight: () => <BookingControl />,
         }}
       />
       <Tabs.Screen
@@ -68,16 +68,16 @@ const TabsLayout = () => {
         }}
       />
       <Tabs.Screen
-        name="activity"
+        name="notifications"
         options={{
           headerTitle: () => <></>,
           tabBarLabelStyle: styles.tabBarLabel,
-          tabBarLabel: "ACTIVIDAD",
+          tabBarLabel: "NOTIF.",
           tabBarIcon: ({ focused, color }) => (
             <BellIcon active={focused} color={color} />
           ),
         }}
-      /> */}
+      />
     </Tabs>
   );
 };
@@ -92,15 +92,15 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
     textAlign: "center",
-    borderColor: Colors.maastrichtBlue,
+    borderColor: "Colors.maastrichtBlue",
     borderWidth: 1,
   },
   tabBar: {
-    backgroundColor: Colors.maastrichtBlue,
+    backgroundColor: Colors.white,
     borderTopWidth: 5,
   },
   tabBarLabel: {
-    color: "white",
+    color: Colors.maastrichtBlue,
     marginBottom: 10,
     fontSize: 9,
     fontFamily: "PoppinsMedium",

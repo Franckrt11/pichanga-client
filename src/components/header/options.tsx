@@ -5,9 +5,9 @@ import { Image } from "expo-image";
 import { useUserContext } from "@/src/context/User";
 import Images from "@/src/utils/Images";
 import Colors from "@/src/utils/Colors";
+import { getAvatarUrl } from "@/src/utils/Helpers";
 import GearIcon from "@/src/components/icons/gear-icon";
 import PencilIcon from "@/src/components/icons/pencil-icon";
-import { getAvatarUrl } from "@/src/utils/Helpers";
 
 const Options = () => {
   const { state } = useUserContext();

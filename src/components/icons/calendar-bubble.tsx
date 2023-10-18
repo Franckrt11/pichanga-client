@@ -11,7 +11,7 @@ const CalendarBubble = ({ active, color }: ColorIconProps) => {
       style={[
         TabStyles.tabIcon,
         {
-          borderColor: active ? "white" : Colors.maastrichtBlue,
+          borderColor: active ? Colors.maastrichtBlue : Colors.silverSand,
           backgroundColor: active ? Colors.maastrichtBlue : "white",
         },
       ]}

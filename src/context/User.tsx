@@ -3,15 +3,17 @@ import { UserData, ProviderProps } from "@/src/utils/Types";
 
 interface Action {
   type: string;
-  payload?: UserData | null;
-  photoload?: string | null;
+  payload?: UserData;
+  photoload?: string;
 }
 
 const initialState: UserData = {
   id: 0,
   name: "",
-  ruc: "",
+  lastname: "",
   email: "",
+  phone: "",
+  district: "",
   photo: null,
   push: false,
   mailing: false,
@@ -31,8 +33,10 @@ const UserReducer = (state: UserData, action: Action): UserData => {
       return {
         id: action.payload!.id,
         name: action.payload!.name,
-        ruc: action.payload!.ruc,
+        lastname: action.payload!.lastname,
         email: action.payload!.email,
+        phone: action.payload!.phone,
+        district: action.payload!.district,
         photo: action.payload!.photo,
         push: action.payload!.push,
         mailing: action.payload!.mailing,
@@ -44,7 +48,7 @@ const UserReducer = (state: UserData, action: Action): UserData => {
     case "change-avatar": {
       return {
         ...state,
-        photo: action.photoload!,
+        photo: action.photoload,
       };
     }
     default: {

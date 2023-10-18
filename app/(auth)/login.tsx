@@ -1,7 +1,6 @@
 import {
   Pressable,
   Image,
-  Platform,
   SafeAreaView,
   ScrollView,
   Text,
@@ -10,21 +9,23 @@ import {
   StyleSheet,
 } from "react-native";
 import { useState } from "react";
-import { Stack, router } from "expo-router";
+import { Stack, router, Link } from "expo-router";
 import { useAuthContext } from "@/src/context/Auth";
 import Input from "@/src/components/input";
+import GoogleLogo from "@/src/components/icons/google-logo";
+import FacebookLogo from "@/src/components/icons/facebook-logo";
 import Images from "@/src/utils/Images";
-import { LayoutStyles } from "@/src/utils/Styles";
+import { LayoutStyles, PageStyles } from "@/src/utils/Styles";
 import Colors from "@/src/utils/Colors";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { signIn, loading, errors } = useAuthContext();
 
   return (
     <SafeAreaView
-      style={LayoutStyles.blueContainer}
+      style={LayoutStyles.whiteContainer}
     >
       <Stack.Screen
         options={{
@@ -32,48 +33,71 @@ const Login = () => {
         }}
       />
       <ScrollView
-        style={{ paddingTop: 120 }}
+        style={{ paddingTop: 80 }}
         contentContainerStyle={{ alignItems: "center" }}
       >
         <View style={[LayoutStyles.scrollContainer, { width: "80%", alignItems: "stretch" }]}>
           <View style={{ flex: 1, alignItems: "center", marginBottom: 50 }}>
-            <Image style={LoginStyles.logo} source={Images.logo} />
+            <Image style={styles.logo} source={Images.logo} />
           </View>
           <View style={{ marginBottom: 20 }}>
             <Input
-              placeholder="Correo"
-              value={email}
-              onChangeText={(text: string) => setEmail(text)}
-              styles={LoginStyles.input}
-              theme="dark"
-              error={errors ? errors.email : null}
+              placeholder="Correo o número de celular"
+              value={username}
+              onChangeText={(text: string) => setUsername(text)}
+              styles={PageStyles.input}
+              theme="light"
+              error={errors ? errors.username : null}
             />
             <Input
               placeholder="Contraseña"
               value={password}
               onChangeText={(text: string) => setPassword(text)}
-              styles={LoginStyles.input}
-              theme="dark"
+              styles={PageStyles.input}
+              theme="light"
               password={true}
               error={errors ? errors.password : null}
             />
           </View>
-          <View style={LoginStyles.buttonContainer}>
+          <View style={styles.buttonContainer}>
             {loading ? (
               <ActivityIndicator style={{ marginBottom: 10 }} size={"large"} />
             ) : (
               <Pressable
-                onPress={() => signIn(email, password)}
-                style={LoginStyles.button}
+                onPress={() => signIn(username, password)}
+                style={styles.button}
               >
-                <Text style={LoginStyles.buttonText}>INGRESAR</Text>
+                <Text style={styles.buttonText}>INGRESAR</Text>
               </Pressable>
             )}
+
             <Pressable
-              style={LoginStyles.buttonOutline}
-              onPress={() => router.push("/register")}
+              style={[styles.button, { backgroundColor: Colors.maastrichtBlue, width: "80%" }]}
+              onPress={() => console.log('Login invitado')}
             >
-              <Text style={LoginStyles.buttonText}>REGISTRARSE</Text>
+              <Text style={styles.buttonText}>Ingresar como INVITADO</Text>
+            </Pressable>
+
+            <Text style={styles.text}>
+              ¿No tienes una cuenta?
+              <Link
+                href={"(auth)/register"}
+                style={{ color: Colors.metallicGreen, marginLeft: 4 }}
+              >
+                Registrarse
+              </Link>
+            </Text>
+          </View>
+
+          <View style={styles.buttonContainer}>
+            <Text style={styles.text}>También puedes:</Text>
+            <Pressable style={[styles.buttonOutline, {flexDirection: "row", justifyContent: "center"}]}>
+              <GoogleLogo size={20} />
+              <Text style={{ color: Colors.maastrichtBlue, fontFamily: "PoppinsMedium", marginLeft: 10 }}>Ingresar con Google</Text>
+            </Pressable>
+            <Pressable style={[styles.buttonOutline, {flexDirection: "row", justifyContent: "center"}]}>
+              <FacebookLogo size={20} />
+              <Text style={{ color: Colors.maastrichtBlue, fontFamily: "PoppinsMedium", marginLeft: 10 }}>Ingresar con Facebook</Text>
             </Pressable>
           </View>
         </View>
@@ -84,22 +108,20 @@ const Login = () => {
 
 export default Login;
 
-const LoginStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   logo: {
     height: 150,
     width: 140
   },
-  input: {
+  text: {
     color: Colors.maastrichtBlue,
-    backgroundColor: Colors.white,
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 10,
     fontFamily: "PoppinsMedium",
+    marginBottom: 10
   },
   buttonContainer: {
     width: "100%",
     alignItems: "center",
+    marginBottom: 30
   },
   button: {
     backgroundColor: Colors.metallicGreen,
@@ -116,13 +138,13 @@ const LoginStyles = StyleSheet.create({
     fontFamily: "PoppinsMedium",
   },
   buttonOutline: {
-    backgroundColor: Colors.maastrichtBlue,
-    marginTop: 5,
-    borderColor: Colors.white,
+    backgroundColor: Colors.white,
+    borderColor: Colors.silverSand,
     borderWidth: 2,
     padding: 10,
     borderRadius: 10,
     alignItems: "center",
-    width: "80%",
+    width: "90%",
+    marginBottom: 10,
   },
 });
