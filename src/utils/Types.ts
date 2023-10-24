@@ -43,10 +43,10 @@ export interface ColorIconProps {
   color: string;
 }
 
-// export interface SizeIconProps {
-//   active?: boolean;
-//   size: number;
-// }
+export interface SizeIconProps {
+  active?: boolean;
+  size: number;
+}
 
 // export interface ISpecialHour {
 //   type: string;

@@ -4,4 +4,4 @@ export const getAvatarUrl = (filename: string | null | undefined) =>
   filename ? `${API_URL}storage/user/avatar/${filename}` : undefined;
 
 export const getFieldUrl = (filename: string | null | undefined) =>
-  filename ? `${API_URL}storage/user/field/${filename}` : undefined;
+  filename ? `${API_URL}storage/company/field/${filename}` : undefined;
