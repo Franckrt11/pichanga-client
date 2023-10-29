@@ -3,6 +3,7 @@ import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 import { AuthProvider } from "@/src/context/Auth";
 import { UserProvider } from "@/src/context/User";
+import { LocationProvider } from "@/src/context/Location";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -38,19 +39,21 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   return (
-    <UserProvider>
-      <AuthProvider>
-        <Stack
-          screenOptions={{
-            headerShown: false,
-            headerStyle: {
-              backgroundColor: "white",
-              // height: 30,
-            },
-            headerShadowVisible: false,
-          }}
-        />
-      </AuthProvider>
-    </UserProvider>
+    <LocationProvider>
+      <UserProvider>
+        <AuthProvider>
+          <Stack
+            screenOptions={{
+              headerShown: false,
+              headerStyle: {
+                backgroundColor: "white",
+                // height: 30,
+              },
+              headerShadowVisible: false,
+            }}
+          />
+        </AuthProvider>
+      </UserProvider>
+    </LocationProvider>
   );
 }
