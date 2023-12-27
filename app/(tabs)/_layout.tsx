@@ -8,8 +8,11 @@ import ChatIcon from "@/src/components/icons/chat-icon";
 import BellIcon from "@/src/components/icons/bell-icon";
 import Logo from "@/src/components/header/logo";
 import Options from "@/src/components/header/options";
+import { initSockets } from "@/src/models/Socket";
 
 const TabsLayout = () => {
+  initSockets();
+
   return (
     <Tabs
       screenOptions={{

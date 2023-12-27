@@ -2,7 +2,8 @@
   "expo": {
     "name": "Te Juego una Pichanga",
     "slug": "pichanga-client",
-    "version": "0.2.5",
+    "owner": "tjupichanga",
+    "version": "0.3.2",
     "orientation": "portrait",
     "icon": "./src/assets/images/icon.png",
     "scheme": "pichanga",
