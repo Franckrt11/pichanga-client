@@ -3,7 +3,6 @@ import {
   ActivityIndicator,
   Text,
   View,
-  Platform,
   StyleSheet
 } from "react-native";
 import { useState } from "react";
