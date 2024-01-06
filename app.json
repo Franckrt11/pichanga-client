@@ -3,7 +3,7 @@
     "name": "Te Juego una Pichanga",
     "slug": "pichanga-client",
     "owner": "tjupichanga",
-    "version": "0.3.3",
+    "version": "0.4.1",
     "orientation": "portrait",
     "icon": "./src/assets/images/icon.png",
     "scheme": "pichanga",
@@ -16,7 +16,10 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.pichanga.client"
+      "bundleIdentifier": "com.pichanga.client",
+      "config": {
+        "googleMapsApiKey": "AIzaSyDYyNKePqMbXle2p5DedePIE0aynJ6lEIg"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -26,7 +29,7 @@
       "package": "com.pichanga.client",
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyA8d4EpM55qBhh8iQYm1nnLWbJTYMl4NYc"
+          "apiKey": "AIzaSyBGn1jRazr0WPysGUUD8SeRV0YA65h_x7o"
         }
       }
     },
