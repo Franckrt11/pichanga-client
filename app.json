@@ -3,7 +3,7 @@
     "name": "Te Juego una Pichanga",
     "slug": "pichanga-client",
     "owner": "tjupichanga",
-    "version": "0.4.1",
+    "version": "0.4.2",
     "orientation": "portrait",
     "icon": "./src/assets/images/icon.png",
     "scheme": "pichanga",
@@ -27,6 +27,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.pichanga.client",
+      "versionCode": 1,
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyBGn1jRazr0WPysGUUD8SeRV0YA65h_x7o"
@@ -43,7 +44,8 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "Permitir a $(PRODUCT_NAME) acceder a tu cámara y fotos."
+          "photosPermission": "Permitir a $(PRODUCT_NAME) acceder a tus fotos.",
+          "cameraPermission": "Permitir a $(PRODUCT_NAME) acceder a tu cámara."
         }
       ],
       [
