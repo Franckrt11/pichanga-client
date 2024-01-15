@@ -47,6 +47,7 @@ const Input = ({
         secureTextEntry={hidePassword}
         style={styles}
         placeholder={placeholder}
+        placeholderTextColor={Colors.silverSand}
       />
       {password && (
         <Icon
