@@ -3,7 +3,7 @@
     "name": "Te Juego una Pichanga",
     "slug": "pichanga-client",
     "owner": "tjupichanga",
-    "version": "0.4.2",
+    "version": "0.4.3",
     "orientation": "portrait",
     "icon": "./src/assets/images/icon.png",
     "scheme": "pichanga",
@@ -27,7 +27,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.pichanga.client",
-      "versionCode": 1,
+      "versionCode": 2,
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyBGn1jRazr0WPysGUUD8SeRV0YA65h_x7o"
