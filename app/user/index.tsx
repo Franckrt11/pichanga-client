@@ -18,7 +18,7 @@ import {
   BottomSheetModal,
   BottomSheetModalProvider,
   BottomSheetBackdrop
-} from '@gorhom/bottom-sheet';
+} from "@gorhom/bottom-sheet";
 import { Picker } from "@react-native-picker/picker";
 import { useAuthContext } from "@/src/context/Auth";
 import { useUserContext } from "@/src/context/User";

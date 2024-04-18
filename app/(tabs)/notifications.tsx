@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
+import { Text, View, SafeAreaView, ScrollView } from "react-native";
 import React from "react";
 import { LayoutStyles } from "@/src/utils/Styles";
 
@@ -20,5 +20,3 @@ const Notifications = () => {
 };
 
 export default Notifications;
-
-const styles = StyleSheet.create({});

@@ -9,7 +9,7 @@ import { router } from "expo-router";
 import { LayoutStyles } from "@/src/utils/Styles";
 import Colors from "@/src/utils/Colors";
 import ChildPage from "@/src/components/layouts/child-page";
-import UserBlockedIcon from "@/src/components/icons/user-blocked-icon";
+// import UserBlockedIcon from "@/src/components/icons/user-blocked-icon";
 import TermsIcon from "@/src/components/icons/terms-icon";
 import HelpIcon from "@/src/components/icons/help-icon";
 import Switch from "@/src/components/switch";

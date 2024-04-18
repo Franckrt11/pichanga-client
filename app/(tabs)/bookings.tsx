@@ -1,7 +1,6 @@
-import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
+import { Text, View, SafeAreaView, ScrollView } from "react-native";
 import React from "react";
 import { LayoutStyles } from "@/src/utils/Styles";
-import Colors from "@/src/utils/Colors";
 
 const Bookings = () => {
   return (
@@ -21,5 +20,3 @@ const Bookings = () => {
 };
 
 export default Bookings;
-
-const styles = StyleSheet.create({});

@@ -1,7 +1,7 @@
 import { SafeAreaView, ScrollView, StyleSheet, Text, View, TextInput, Pressable } from "react-native"
 import { useEffect, useState, createRef } from "react";
 import { Stack, useLocalSearchParams } from "expo-router";
-import { Image } from 'expo-image';
+import { Image } from "expo-image";
 import Colors from "@/src/utils/Colors";
 import { fetchMessages, fetchChat, postMessage } from "@/src/models/Chat";
 import { useAuthContext } from "@/src/context/Auth";

@@ -3,7 +3,7 @@
     "name": "Te Juego una Pichanga",
     "slug": "pichanga-client",
     "owner": "tjupichanga",
-    "version": "0.4.5",
+    "version": "0.4.6",
     "orientation": "portrait",
     "icon": "./src/assets/images/icon.png",
     "scheme": "pichanga",
@@ -13,7 +13,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.tjupichanga.client",
@@ -27,7 +29,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.tjupichanga.client",
-      "versionCode": 3,
+      "versionCode": 4,
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyAkYhZ2IpVeGHOHLtzMhwGn7dDp7EFaIIs"
@@ -56,13 +58,9 @@
       ]
     ],
     "experiments": {
-      "tsconfigPaths": true,
       "typedRoutes": true
     },
     "extra": {
-      "router": {
-        "origin": false
-      },
       "eas": {
         "projectId": "847dd712-8ff7-4749-80cf-94084cf430ca"
       }

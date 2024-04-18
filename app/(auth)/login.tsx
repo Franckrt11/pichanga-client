@@ -9,7 +9,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { useState } from "react";
-import { Stack, router, Link } from "expo-router";
+import { Stack, Link } from "expo-router";
 import { useAuthContext } from "@/src/context/Auth";
 import Input from "@/src/components/input";
 import GoogleLogo from "@/src/components/icons/google-logo";

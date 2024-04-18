@@ -5,7 +5,6 @@ import {
   SafeAreaView,
   ScrollView,
 } from "react-native";
-import { router } from "expo-router";
 import FieldCarousel from "@/src/components/field-carousel";
 import { LayoutStyles } from "@/src/utils/Styles";
 import ReservationItem from "@/src/components/reservation-item";

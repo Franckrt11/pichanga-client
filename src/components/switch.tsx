@@ -1,6 +1,6 @@
 import { StyleSheet, Pressable, View } from "react-native";
 import { useEffect } from "react";
-import Animated, { useSharedValue, useAnimatedStyle, withTiming, Easing } from 'react-native-reanimated';
+import Animated, { useSharedValue, useAnimatedStyle, withTiming, Easing } from "react-native-reanimated";
 import Colors from "@/src/utils/Colors";
 
 const Switch = ({ value, onValueChange }: { value: boolean, onValueChange:any}) => {
