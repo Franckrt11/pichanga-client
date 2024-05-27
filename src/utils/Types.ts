@@ -55,25 +55,25 @@ export interface SizeIconProps {
 //   reason: string;
 // };
 
-// export interface FieldData {
-//   active?: boolean;
-//   address: string;
-//   city: string;
-//   company_id: number;
-//   country: string;
-//   district: string;
-//   games: string;
-//   id?: number;
-//   map: string;
-//   mobile: string;
-//   name: string;
-//   parking: string;
-//   phone: string;
-//   players: string;
-//   portrait?: string | null;
-//   size: string;
-//   type: string;
-// };
+export interface FieldData {
+  id: number;
+  name: string;
+  address: string;
+  country: string;
+  city: string;
+  district: string;
+  map_latitude: number;
+  map_longitude: number;
+  portrait?: string | null;
+  games?: string;
+  mobile?: string;
+  parking?: string;
+  phone?: string;
+  players?: string;
+  size?: string;
+  type?: string;
+  company_id: number;
+};
 
 // export interface FieldPicture {
 //   location: string;
