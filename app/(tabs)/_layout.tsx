@@ -44,7 +44,7 @@ const TabsLayout = () => {
           tabBarLabel: "CANCHAS",
           tabBarIcon: ({ focused, color }) => (
             <FieldIcon active={focused} color={color} />
-          ),
+          )
         }}
       />
       <Tabs.Screen
