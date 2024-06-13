@@ -55,16 +55,22 @@ export interface SizeIconProps {
 //   reason: string;
 // };
 
+interface DistrictData {
+  id: number;
+  name: string;
+  city_id: number;
+}
+
 export interface FieldData {
   id: number;
   name: string;
   address: string;
-  country: string;
-  city: string;
-  district: string;
+  country: Object;
+  city: Object;
+  district: DistrictData;
   map_latitude: number;
   map_longitude: number;
-  portrait?: string | null;
+  portrait: string | null;
   games?: string;
   mobile?: string;
   parking?: string;
