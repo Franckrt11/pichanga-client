@@ -61,12 +61,23 @@ interface DistrictData {
   city_id: number;
 }
 
+interface CityData {
+  id: number;
+  name: string;
+  country_id: number;
+}
+
+interface CountryData {
+  id: number;
+  name: string;
+}
+
 export interface FieldData {
   id: number;
   name: string;
   address: string;
-  country: Object;
-  city: Object;
+  country: CountryData;
+  city: CityData;
   district: DistrictData;
   map_latitude: number;
   map_longitude: number;
@@ -88,12 +99,12 @@ export interface FieldData {
 //   field_id: number;
 // };
 
-// export interface FieldPictureData {
-//   id: number;
-//   filename: string;
-//   position: number;
-//   field_id: number;
-// };
+export interface FieldPictureData {
+  id: number;
+  filename: string;
+  position: number;
+  field_id: number;
+};
 
 // export interface FieldDay {
 //   day: string;

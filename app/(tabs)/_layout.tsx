@@ -4,7 +4,7 @@ import Colors from "@/src/utils/Colors";
 import HomeIcon from "@/src/components/icons/home-icon";
 import FieldIcon from "@/src/components/icons/field-icon";
 import CalendarBubble from "@/src/components/icons/calendar-bubble";
-import ChatIcon from "@/src/components/icons/chat-icon";
+import ChatBubble from "@/src/components/icons/chat-bubble";
 import BellIcon from "@/src/components/icons/bell-icon";
 import Logo from "@/src/components/header/logo";
 import Options from "@/src/components/header/options";
@@ -66,7 +66,7 @@ const TabsLayout = () => {
           tabBarLabelStyle: styles.tabBarLabel,
           tabBarLabel: "CHAT",
           tabBarIcon: ({ focused, color }) => (
-            <ChatIcon active={focused} color={color} />
+            <ChatBubble active={focused} color={color} />
           ),
         }}
       />

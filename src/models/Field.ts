@@ -20,3 +20,33 @@ export const fetctNearbyFields = async (location: LatLng, distance: number, toke
     console.log("🚩 ~ models/Field.ts ~ fetctNearbyFields() ~ error:", error);
   }
 };
+
+export const fetchField = async (fid: number, token: string | null)  => {
+  try {
+    const response = await fetch(`${API_URL}api/client/field/${fid}`, {
+      method: "GET",
+      headers: {
+        ...FETCH_HEADERS,
+        Authorization: `Bearer ${token}`,
+      }
+    });
+    return await response.json();
+  } catch (error) {
+    console.log("🚩 ~ models/Field.ts ~ fetchField() ~ error:", error);
+  }
+};
+
+export const fetchFieldPictures = async (id: number, token: string | null)  => {
+  try {
+    const response = await fetch(`${API_URL}api/client/field/${id}/pictures`, {
+      method: "GET",
+      headers: {
+        ...FETCH_HEADERS,
+        Authorization: `Bearer ${token}`,
+      }
+    });
+    return await response.json();
+  } catch (error) {
+    console.log("🚩 ~ models/Field.ts ~ fetchFieldPictures() ~ error:", error);
+  }
+};

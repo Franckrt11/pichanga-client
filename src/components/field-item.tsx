@@ -44,7 +44,7 @@ const FieldItem = ({ id, name, district, portrait }: FieldProps) => {
               </View>
             </View>
             <View style={styles.more}>
-              <Pressable onPress={() => console.log('show field id:', id)}>
+              <Pressable onPress={() => router.push(`/fields/${id}`)}>
                 <ZoomPlusIcon
                   size={20}
                   color={Colors.maastrichtBlue}
