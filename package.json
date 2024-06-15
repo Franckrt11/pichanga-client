@@ -26,6 +26,9 @@
     "@react-navigation/native": "^6.0.2",
     "date-fns": "^3.6.0",
     "expo": "~50.0.14",
+    "expo-auth-session": "~5.4.0",
+    "expo-crypto": "~12.8.1",
+    "expo-dev-client": "~3.3.11",
     "expo-device": "~5.9.4",
     "expo-font": "~11.10.3",
     "expo-image": "~1.10.6",
@@ -50,10 +53,12 @@
     "react-native-svg": "14.1.0",
     "react-native-vector-icons": "^10.0.3",
     "react-native-web": "~0.19.6",
-    "socket.io-client": "^4.7.5"
+    "socket.io-client": "^4.7.5",
+    "@expo/config-plugins": "7.9.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
     "@babel/plugin-transform-export-namespace-from": "^7.24.6",
     "@types/react": "~18.2.45",
     "@types/react-native-vector-icons": "^6.4.18",
