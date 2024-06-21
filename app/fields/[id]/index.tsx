@@ -10,6 +10,7 @@ import ChatIcon from "@/src/components/icons/chat-icon";
 import StarIcon from "@/src/components/icons/star-icon";
 import { useAuthContext } from "@/src/context/Auth";
 import { fetchField, fetchFieldPictures } from "@/src/models/Field";
+import { fetchChatRoom, createChatRoom } from "@/src/models/Chat";
 import { FieldData, FieldPictureData } from "@/src/utils/Types";
 
 interface PictureList {
@@ -99,6 +100,18 @@ const FieldDetails = () => {
     }
   };
 
+  const openChat = async (user:number, company: number) => {
+    const chat = await fetchChatRoom(user, company, token);
+    console.log("🚀 ~ openChat ~ chat:", chat);
+    if (chat.data) {
+      router.push(`/chats/${chat.room}`)
+    } else {
+      const newChat = await createChatRoom(user, company, token);
+      console.log("🚀 ~ openChat ~ newChat:", newChat);
+      if (newChat.status) router.push(`/chats/${newChat.data}`)
+    }
+  };
+
   useEffect(() => {
     getField();
   }, []);
@@ -137,7 +150,7 @@ const FieldDetails = () => {
           <Text style={styles.buttomText}>Ver comentarios</Text>
         </Pressable>
         <Pressable
-          onPress={() => router.push(`/chats/${params.id}`)}
+          onPress={() => openChat(params.id as unknown as number, field?.id as number)}
           style={styles.buttom}
         >
           <ChatIcon size={10} color={Colors.maastrichtBlue} />
