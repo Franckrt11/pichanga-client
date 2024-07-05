@@ -111,12 +111,13 @@ export interface FieldPictureData {
 //   active: boolean;
 // };
 
-// export interface HourRange {
-//   id: number;
-//   from: string;
-//   to: string;
-// };
-
+export interface HourRange {
+  id?: number;
+  position: number;
+  start: number;
+  end: number;
+  price?: any;
+};
 // export interface HourDayRange {
 //   [key: string]: HourRange[]
 // };
@@ -157,4 +158,17 @@ export interface IFetchUser extends PhotoData {
   lastname: string;
   email: string;
   phone: string;
+}
+
+export interface ReserveData {
+  id?: number;
+  date: string;
+  time: number;
+  game: string;
+  price: number;
+  inscription: boolean;
+  status?: string;
+  field_hour_id: number;
+  field_id: number;
+  user_id: number;
 }

@@ -50,3 +50,18 @@ export const fetchFieldPictures = async (id: number, token: string | null)  => {
     console.log("🚩 ~ models/Field.ts ~ fetchFieldPictures() ~ error:", error);
   }
 };
+
+export const fetchFieldDays = async (id: number, token: string | null)  => {
+  try {
+    const response = await fetch(`${API_URL}api/client/field/${id}/days`, {
+      method: "GET",
+      headers: {
+        ...FETCH_HEADERS,
+        Authorization: `Bearer ${token}`,
+      }
+    });
+    return await response.json();
+  } catch (error) {
+    console.log("🚩 ~ models/Field.ts ~ fetchFieldDays() ~ error:", error);
+  }
+};

@@ -2,7 +2,13 @@ import { createContext, useEffect, useContext, useState } from "react";
 import { router, useSegments } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useUserContext } from "./User";
-import { fetchLogin, fetchRegister, fetchUser, fetchNewPassword } from "@/src/models/Auth";
+import {
+  fetchLogin,
+  fetchRegister,
+  fetchUser,
+  fetchNewPassword,
+  fetchLogout,
+} from "@/src/models/Auth";
 import { fetchConfigAll } from "@/src/models/Config";
 import { RegisterUserData, ProviderProps } from "@/src/utils/Types";
 
@@ -10,7 +16,11 @@ interface IAuthContext {
   signIn: (username: string, password: string) => Promise<void>;
   signOut: () => void;
   signUp: (data: RegisterUserData) => Promise<void>;
-  newPassword: (email: string, oldPassword: string, newPassword: string) => Promise<void>;
+  newPassword: (
+    email: string,
+    oldPassword: string,
+    newPassword: string
+  ) => Promise<void>;
   token: string | null;
   loading: boolean;
   errors: any; // Revisar type de Errores del API
@@ -75,12 +85,26 @@ export const AuthProvider = ({ children }: ProviderProps) => {
     setLoading(false);
   };
 
-  const signOut = () => {
+  const signOut = async () => {
     setLoading(true);
-    setToken(null);
-    AsyncStorage.removeItem("token");
-    AsyncStorage.removeItem("userId");
-    dispatch({ type: "delete" });
+    try {
+      const response = await fetchLogout(token);
+      if (response.status) {
+        setToken(null);
+        AsyncStorage.removeItem("token");
+        AsyncStorage.removeItem("userId");
+        dispatch({ type: "delete" });
+      }
+
+      if (response.message === "Unauthenticated.") {
+        setToken(null);
+        AsyncStorage.removeItem("token");
+        AsyncStorage.removeItem("userId");
+        dispatch({ type: "delete" });
+      }
+    } catch (error) {
+      console.log("🚩 ~ context/Auth.js ~ signOut() ~ error:", error);
+    }
     setLoading(false);
   };
 
@@ -109,7 +133,11 @@ export const AuthProvider = ({ children }: ProviderProps) => {
     setLoading(false);
   };
 
-  const newPassword = async (email: string, oldPassword: string, newPassword: string) => {
+  const newPassword = async (
+    email: string,
+    oldPassword: string,
+    newPassword: string
+  ) => {
     try {
       let userToken = await AsyncStorage.getItem("token");
       let userId = await AsyncStorage.getItem("userId");
@@ -161,7 +189,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
         token,
         loading,
         errors,
-        config
+        config,
       }}
     >
       {children}

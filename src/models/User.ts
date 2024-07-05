@@ -1,5 +1,4 @@
 import { API_URL, FETCH_HEADERS } from "@/src/utils/Constants";
-// import { UserData } from "@/src/utils/Types";
 
 interface IData {
   name: string;
