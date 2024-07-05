@@ -1,12 +1,42 @@
-import { StyleSheet, Text, View, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Pressable } from "react-native";
+import { router } from "expo-router";
+import { format, parseISO } from "date-fns";
+import { es } from "date-fns/locale";
 import ZoomPlusIcon from "@/src/components/icons/zoom-plus-icon";
 import Colors from "@/src/utils/Colors";
+import { FieldData, HourRange } from "@/src/utils/Types";
+import { HOUR_LIST } from "@/src/utils/Constants";
 
-const ReservationItem = () => {
+const ReservationItem = ({
+  id,
+  date,
+  field,
+  hour,
+}: {
+  id: number;
+  date: string;
+  field: FieldData;
+  hour: HourRange;
+}) => {
+  const getHourName = (key: number) => {
+    if (key) {
+      const filtered = HOUR_LIST.filter((hour) => {
+        return hour.value === key;
+      });
+      return filtered[0].text;
+    }
+    return;
+  };
+
+  const getDayName = (day:string) => {
+    const date = parseISO(day);
+    return format(date, "dd MMM yyyy", { locale: es });
+  };
+
   return (
     <Pressable
       style={styles.matchBlock}
-      onPress={() => console.log("GoTo Next Match")}
+      onPress={() => router.push(`/bookings/${id}`)}
     >
       <View style={styles.matchContent}>
         <View>
@@ -26,19 +56,19 @@ const ReservationItem = () => {
             Pedro Paredes
           </Text>
           <Text style={[styles.matchContentText, { marginBottom: 3 }]}>
-            06 Enero 2024
+            {getDayName(date)}
           </Text>
           <Text style={[styles.matchContentText, { marginBottom: 3 }]}>
-            5:00 pm - 8:00 pm
+            {getHourName(hour.start)} - {getHourName(hour.end)}
           </Text>
-          <Text style={styles.matchContentText}>Cancha Lorem</Text>
+          <Text style={styles.matchContentText}>{field.name}</Text>
         </View>
       </View>
       <View style={styles.matchIcon}>
         <ZoomPlusIcon size={20} color={Colors.white} />
       </View>
     </Pressable>
-  )
+  );
 };
 
 export default ReservationItem;

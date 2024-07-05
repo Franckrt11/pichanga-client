@@ -5,14 +5,20 @@ import {
   SafeAreaView,
   ScrollView,
 } from "react-native";
+import { useEffect, useState } from "react";
 import FieldCarousel from "@/src/components/field-carousel";
 import { LayoutStyles } from "@/src/utils/Styles";
+import { FieldData, HourRange, ReserveData } from "@/src/utils/Types";
 import ReservationItem from "@/src/components/reservation-item";
 import LocationButton from "@/src/components/location-button";
 import { useLocationContext } from "@/src/context/Location";
+import { useAuthContext } from "@/src/context/Auth";
+import { fetchAllReserves } from "@/src/models/Reserve";
 
 const Home = () => {
   const { geoName } = useLocationContext();
+  const { token, userId } = useAuthContext();
+  const [ reserves, setReserves ] = useState<ReserveData[]>([]);
 
   const fields = [
     {
@@ -35,6 +41,19 @@ const Home = () => {
     },
   ];
 
+  const getReserves = async () => {
+    if (userId) {
+      const response = await fetchAllReserves(Number(userId), token);
+      console.log("🚀 ~ getReserves ~ response:", response);
+      if (response.status) setReserves(response.data);
+    }
+  };
+
+  useEffect(() => {
+    getReserves();
+    // console.log('🚖 ~ token', token);
+  }, [userId]);
+
   return (
     <SafeAreaView
       style={LayoutStyles.whiteContainer}
@@ -54,7 +73,15 @@ const Home = () => {
 
           <Text style={styles.title}>SOLICITUD DE RESERVAS</Text>
           <View style={{ width: "100%" }}>
-            <ReservationItem />
+            {reserves.map((reserve, index) => (
+              <ReservationItem
+                key={`reserve-${index}`}
+                id={reserve.id as number}
+                date={reserve.date}
+                field={reserve.field as FieldData}
+                hour={reserve.hour as HourRange}
+              />
+            ))}
           </View>
         </View>
       </ScrollView>

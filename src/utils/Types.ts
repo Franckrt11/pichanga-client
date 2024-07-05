@@ -171,4 +171,6 @@ export interface ReserveData {
   field_hour_id: number;
   field_id: number;
   user_id: number;
+  field?: FieldData;
+  hour?: HourRange;
 }
