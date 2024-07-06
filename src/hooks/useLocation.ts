@@ -14,7 +14,7 @@ const useLocation = () => {
           // distanceInterval: 1500,
           // timeInterval: 10000,
         }, ({coords}) => {
-          console.log('🚗 ~ watchPositionAsync ~ coords:', {lat :coords.latitude, lng: coords.longitude});
+          // console.log('🚗 ~ watchPositionAsync ~ coords:', {lat :coords.latitude, lng: coords.longitude});
           const newCoords: LatLng = {latitude :coords.latitude, longitude: coords.longitude};
           setLocation(newCoords);
         });

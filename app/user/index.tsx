@@ -5,7 +5,7 @@ import {
   Pressable,
   View,
   StyleSheet,
-  Alert
+  Alert,
 } from "react-native";
 import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { Stack, router } from "expo-router";
@@ -17,7 +17,7 @@ import {
   BottomSheetView,
   BottomSheetModal,
   BottomSheetModalProvider,
-  BottomSheetBackdrop
+  BottomSheetBackdrop,
 } from "@gorhom/bottom-sheet";
 import { Picker } from "@react-native-picker/picker";
 import { useAuthContext } from "@/src/context/Auth";
@@ -49,7 +49,8 @@ const User = () => {
   const [district, setDistrict] = useState("");
   const [avatar, setAvatar] = useState<string | undefined>(undefined);
 
-  const [cameraStatus, requestCameraPermission] = ImagePicker.useCameraPermissions();
+  const [cameraStatus, requestCameraPermission] =
+    ImagePicker.useCameraPermissions();
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => [120], []);
@@ -93,7 +94,7 @@ const User = () => {
         lastname,
         email,
         phone,
-        district
+        district,
       },
       token,
       state.id
@@ -107,7 +108,9 @@ const User = () => {
     }
   };
 
-  const saveAvatar = async (imageUri: string | boolean): Promise<string | undefined> => {
+  const saveAvatar = async (
+    imageUri: string | boolean
+  ): Promise<string | undefined> => {
     const avatar = await saveUserAvatar(imageUri, token, state.id);
     Alert.alert("Imagen de perfil guardada.");
     return avatar;
@@ -126,21 +129,23 @@ const User = () => {
     if (cameraStatus) {
       if (
         cameraStatus.status === ImagePicker.PermissionStatus.UNDETERMINED ||
-        (cameraStatus.status === ImagePicker.PermissionStatus.DENIED && cameraStatus.canAskAgain)
+        (cameraStatus.status === ImagePicker.PermissionStatus.DENIED &&
+          cameraStatus.canAskAgain)
       ) {
-        const permission = await requestCameraPermission()
+        const permission = await requestCameraPermission();
         if (permission.granted) {
-          await pickCamera()
+          await pickCamera();
         }
       } else if (cameraStatus.status === ImagePicker.PermissionStatus.DENIED) {
-        await Linking.openSettings()
+        await Linking.openSettings();
       } else {
-        await pickCamera()
+        await pickCamera();
       }
     }
   }, [cameraStatus, pickCamera, requestCameraPermission]);
 
   useEffect(() => {
+    console.log('state', state);
     setName(state.name);
     setLastname(state.lastname);
     setPhone(state.phone);
@@ -163,13 +168,11 @@ const User = () => {
 
   return (
     <BottomSheetModalProvider>
-      <SafeAreaView
-        style={LayoutStyles.whiteContainer}
-      >
+      <SafeAreaView style={LayoutStyles.whiteContainer}>
         <Stack.Screen
           options={{
             headerShown: true,
-            title: '',
+            title: "",
             headerLeft: () => <Back />,
           }}
         />
@@ -218,7 +221,7 @@ const User = () => {
 
           <View style={[LayoutStyles.scrollContainer, { width: "80%" }]}>
             <Image
-              source={{uri: avatar}}
+              source={{ uri: avatar }}
               placeholder={Images.avatarDefault}
               style={{
                 borderRadius: 60,
@@ -270,22 +273,46 @@ const User = () => {
                 keyboardType="email-address"
                 error={errors ? errors.email : null}
               />
-              <View style={[PageStyles.pickerContainer, { marginBottom: 5, borderWidth: 1 }]}>
+              <View
+                style={[
+                  PageStyles.pickerContainer,
+                  { marginBottom: 5, borderWidth: 1 },
+                ]}
+              >
                 <Picker
                   style={PageStyles.picker}
                   selectedValue={district}
                   onValueChange={(value, itemIndex) => setDistrict(value)}
                 >
-                  <Picker.Item fontFamily="PoppinsMedium" label="Distritos" value="" />
+                  <Picker.Item
+                    fontFamily="PoppinsMedium"
+                    label="Distritos"
+                    value=""
+                  />
                   {LIMA_DISTRICTS.map((district, index) => (
-                    <Picker.Item fontFamily="PoppinsMedium" key={index} label={district} value={district} />
+                    <Picker.Item
+                      fontFamily="PoppinsMedium"
+                      key={index}
+                      label={district}
+                      value={district}
+                    />
                   ))}
                 </Picker>
               </View>
-              {errors?.district ? <Text style={styles.errorMessages}>{errors.district}</Text> : <View style={{ marginBottom: 15}}/>}
+              {errors?.district ? (
+                <Text style={styles.errorMessages}>{errors.district}</Text>
+              ) : (
+                <View style={{ marginBottom: 15 }} />
+              )}
             </View>
 
-            <View style={{ width: "80%", marginBottom: 40, marginHorizontal: "auto" }}>
+            <View
+              style={{
+                width: "80%",
+                marginBottom: 40,
+                marginHorizontal: "auto",
+              }}
+            >
               <Pressable
                 onPress={() => router.push("/user/password")}
                 style={styles.button}
@@ -322,7 +349,10 @@ const User = () => {
             <View style={{ width: "100%", marginBottom: 50 }}>
               <Pressable
                 onPress={() => saveProfile()}
-                style={[styles.button, { backgroundColor: Colors.metallicGreen }]}
+                style={[
+                  styles.button,
+                  { backgroundColor: Colors.metallicGreen },
+                ]}
               >
                 <Text
                   style={{ fontFamily: "PoppinsMedium", color: Colors.white }}

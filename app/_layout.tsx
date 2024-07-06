@@ -40,8 +40,8 @@ export default function RootLayout() {
 function RootLayoutNav() {
   return (
     <LocationProvider>
-      <AuthProvider>
-        <UserProvider>
+      <UserProvider>
+        <AuthProvider>
           <Stack
             screenOptions={{
               headerShown: false,
@@ -52,8 +52,8 @@ function RootLayoutNav() {
               headerShadowVisible: false,
             }}
           />
-        </UserProvider>
-      </AuthProvider>
+        </AuthProvider>
+      </UserProvider>
     </LocationProvider>
   );
 }

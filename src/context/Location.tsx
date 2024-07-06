@@ -32,7 +32,7 @@ export const LocationProvider = ({ children }: ProviderProps) => {
     ) => {
     try {
       const geocode = await reverseGeocodeAsync({latitude, longitude});
-      console.log("🗺 ~ context/Location.tsx ~ reverseGeocodeAsync() ~ geocode:", geocode);
+      // console.log("🗺 ~ context/Location.tsx ~ reverseGeocodeAsync() ~ geocode:", geocode);
       if (geocode[0]) {
         // let postalCode = findPostalCode(geocode[0].postalCode);
         // if (postalCode) setRegion(postalCode.name);

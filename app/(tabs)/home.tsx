@@ -44,7 +44,6 @@ const Home = () => {
   const getReserves = async () => {
     if (userId) {
       const response = await fetchAllReserves(Number(userId), token);
-      console.log("🚀 ~ getReserves ~ response:", response);
       if (response.status) setReserves(response.data);
     }
   };
@@ -72,14 +71,16 @@ const Home = () => {
           </View>
 
           <Text style={styles.title}>SOLICITUD DE RESERVAS</Text>
-          <View style={{ width: "100%" }}>
+          <View style={{ width: "100%", paddingBottom: 30 }}>
             {reserves.map((reserve, index) => (
               <ReservationItem
                 key={`reserve-${index}`}
                 id={reserve.id as number}
+                status={reserve.status as string}
                 date={reserve.date}
                 field={reserve.field as FieldData}
                 hour={reserve.hour as HourRange}
+                inscription={reserve.inscription}
               />
             ))}
           </View>
