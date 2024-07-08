@@ -157,17 +157,17 @@ export const AuthProvider = ({ children }: ProviderProps) => {
 
   const isLoggedIn = async () => {
     try {
-      let userToken = await AsyncStorage.getItem("token");
-      let userId = await AsyncStorage.getItem("userId");
+      let storageToken = await AsyncStorage.getItem("token");
+      let storageId = await AsyncStorage.getItem("userId");
 
-      if (userToken !== null && typeof userToken !== "undefined") {
-        setToken(userToken);
-        setUserId(userId);
-        await loadConfig(userToken);
+      if (storageToken !== null && typeof storageToken !== "undefined") {
+        setToken(storageToken);
+        setUserId(storageId);
+        await loadConfig(storageToken);
       }
 
-      if (userId !== null && typeof userId !== "undefined") {
-        const response = await fetchUser(userId, userToken);
+      if (storageId !== null && typeof storageId !== "undefined") {
+        const response = await fetchUser(storageId, storageToken);
         if (response.status) {
           dispatch({
             type: "change",
