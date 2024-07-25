@@ -31,9 +31,7 @@ const ChatMessages = () => {
 
   const getChat = async (): Promise<void> => {
     const response = await fetchChat(id as unknown as number, token);
-    if (response.status) {
-      setRoom(response.data);
-    }
+    if (response.status) setRoom(response.data);
   };
 
   const sendMessage = async (): Promise<void> => {
