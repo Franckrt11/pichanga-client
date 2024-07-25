@@ -27,6 +27,17 @@ export interface UserData {
   mailing: boolean;
 }
 
+export interface CompanyData {
+  id: number;
+  name: string;
+  photo?: string | null;
+  email: string;
+  ruc: string;
+  mailing: boolean;
+  push: boolean;
+  status: boolean;
+}
+
 // export interface FetchUserData extends UserData {
 //   password: string;
 //   password_confirmation: string;
@@ -90,6 +101,7 @@ export interface FieldData {
   size?: string;
   type?: string;
   company_id: number;
+  company?: CompanyData;
 };
 
 // export interface FieldPicture {

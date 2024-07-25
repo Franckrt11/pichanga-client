@@ -58,7 +58,7 @@ const RatingRow = ({ score }: { score: number }) => {
 
 const FieldDetails = () => {
   const params = useLocalSearchParams();
-  const { token } = useAuthContext();
+  const { userId, token } = useAuthContext();
   const [field, setField] = useState<FieldData | null>(null);
   const [pictures, setPictures] = useState<PictureList[]>([]);
   const [coords, setCoords] = useState<LatLng>({
@@ -100,15 +100,13 @@ const FieldDetails = () => {
     }
   };
 
-  const openChat = async (user:number, company: number) => {
+  const openChat = async (user: number, company: number) => {
     const chat = await fetchChatRoom(user, company, token);
-    console.log("🚀 ~ openChat ~ chat:", chat);
     if (chat.data) {
-      router.push(`/chats/${chat.room}`)
+      router.push(`/chats/${chat.room}`);
     } else {
       const newChat = await createChatRoom(user, company, token);
-      console.log("🚀 ~ openChat ~ newChat:", newChat);
-      if (newChat.status) router.push(`/chats/${newChat.data}`)
+      if (newChat.status) router.push(`/chats/${newChat.data}`);
     }
   };
 
@@ -150,7 +148,7 @@ const FieldDetails = () => {
           <Text style={styles.buttomText}>Ver comentarios</Text>
         </Pressable>
         <Pressable
-          onPress={() => openChat(params.id as unknown as number, field?.id as number)}
+          onPress={() => openChat(userId as unknown as number, field?.company?.id as number)}
           style={styles.buttom}
         >
           <ChatIcon size={10} color={Colors.maastrichtBlue} />
