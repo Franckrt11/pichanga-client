@@ -1,35 +1,19 @@
-import { StyleSheet, FlatList, View, ViewToken } from "react-native";
-import { useState, useRef } from "react";
+import { StyleSheet, ScrollView, View, NativeScrollEvent } from "react-native";
+import { useState } from "react";
 import FieldItem from "@/src/components/field-item";
 import Colors from "@/src/utils/Colors";
+import { FieldData } from "@/src/utils/Types";
 
-interface FieldCarouselItem {
-  id: number;
-  name: string;
-  district: string;
-  portrait: string | null;
-}
-
-interface FieldCarouselProps {
-  data: FieldCarouselItem[];
-}
-
-const Pagination = ({
-  data,
-  index,
-}: {
-  data: FieldCarouselItem[];
-  index: number;
-}) => {
+const Pagination = ({ data, page }: { data: FieldData[]; page: number }) => {
   return (
     <View style={styles.paginationWrapper}>
       {data.map((_, idx) => {
         return (
           <View
-            key={`dot-${idx}`}
+            key={`pagination-dot-${idx}`}
             style={[
               styles.dots,
-              idx === index && { backgroundColor: Colors.maastrichtBlue },
+              idx === page && { backgroundColor: Colors.maastrichtBlue },
             ]}
           />
         );
@@ -38,43 +22,41 @@ const Pagination = ({
   );
 };
 
-const FieldCarousel = ({ data }: FieldCarouselProps) => {
-  const [index, setIndex] = useState<number>(0);
+const FieldCarousel = ({ data }: { data: FieldData[] }) => {
+  const [pageIndex, setPageIndex] = useState<number>(0);
 
-  const handleOnViewableItemsChanged = useRef(
-    ({ viewableItems }: { viewableItems: ViewToken[] }) => {
-      setIndex(viewableItems[0].index as number);
-    }
-  ).current;
-
-  const viewabilityConfig = useRef({
-    itemVisiblePercentThreshold: 50,
-  }).current;
+  const handleSlidePageChanged = ({
+    nativeEvent,
+  }: {
+    nativeEvent: NativeScrollEvent;
+  }) => {
+    let slide = Math.ceil(
+      nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width
+    );
+    setPageIndex(slide);
+  };
 
   return (
     <View>
-      <FlatList
-        data={data}
-        renderItem={({ item, index }) => (
-          <FieldItem
-            key={`item-${index}`}
-            id={item.id}
-            name={item.name}
-            district={item.district}
-            portrait={item.portrait}
-          />
-        )}
-        keyExtractor={(item) => "picture-" + item.id.toString()}
+      <ScrollView
         horizontal
         pagingEnabled
         snapToAlignment="center"
-        onViewableItemsChanged={handleOnViewableItemsChanged}
-        viewabilityConfig={viewabilityConfig}
-        ItemSeparatorComponent={() => (
-          <View style={{ height: "100%", width: 10 }} />
-        )}
-      />
-      <Pagination data={data} index={index} />
+        onScroll={handleSlidePageChanged}
+        showsHorizontalScrollIndicator={false}
+      >
+        {data.map((item, index) => (
+          <View key={`field-item-${index}`} style={{ paddingHorizontal: 5 }}>
+            <FieldItem
+              id={item.id}
+              name={item.name}
+              district={item.district.name}
+              portrait={item.portrait}
+            />
+          </View>
+        ))}
+      </ScrollView>
+      <Pagination data={data} page={pageIndex} />
     </View>
   );
 };
