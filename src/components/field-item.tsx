@@ -7,14 +7,14 @@ import StarIcon from "@/src/components/icons/star-icon";
 import ZoomPlusIcon from "@/src/components/icons/zoom-plus-icon";
 import { getFieldUrl } from "@/src/utils/Helpers";
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get("window");
 const ITEM_LENGTH = width * 0.9;
 
 interface FieldProps {
   id: number;
   name: string;
   district: string;
-  portrait: string | null
+  portrait: string | null;
 }
 
 const FieldItem = ({ id, name, district, portrait }: FieldProps) => {
@@ -24,7 +24,7 @@ const FieldItem = ({ id, name, district, portrait }: FieldProps) => {
         <View style={styles.header}>
           <View style={{ width: 120, overflow: "hidden" }}>
             <Image
-              source={{uri: getFieldUrl(portrait)}}
+              source={{ uri: getFieldUrl(portrait) }}
               placeholder={Images.portraitDefault}
               style={{ width: 200, height: 125, right: "35%" }}
               transition={200}
@@ -45,10 +45,7 @@ const FieldItem = ({ id, name, district, portrait }: FieldProps) => {
             </View>
             <View style={styles.more}>
               <Pressable onPress={() => router.push(`/fields/${id}`)}>
-                <ZoomPlusIcon
-                  size={20}
-                  color={Colors.maastrichtBlue}
-                />
+                <ZoomPlusIcon size={20} color={Colors.maastrichtBlue} />
               </Pressable>
             </View>
           </View>
@@ -66,7 +63,7 @@ const styles = StyleSheet.create({
     gap: 8,
     alignItems: "center",
     marginBottom: 25,
-    width: "100%"
+    width: "100%",
   },
   wrapper: {
     borderRadius: 20,
@@ -82,17 +79,14 @@ const styles = StyleSheet.create({
   },
   content: {
     flexDirection: "row",
-    paddingVertical: 12,
     flex: 1,
     borderLeftWidth: 1,
     borderLeftColor: Colors.silverSand,
   },
   description: {
-    borderRightWidth: 2,
-    borderRightColor: Colors.silverSand,
     flex: 1,
-    paddingVertical: 5,
     paddingLeft: 15,
+    justifyContent: "center",
   },
   title: {
     fontSize: 18,
@@ -105,16 +99,21 @@ const styles = StyleSheet.create({
   score: {
     flexDirection: "row",
     gap: 5,
-    marginTop: 8,
-    alignItems: "center"
+    marginTop: 5,
+    alignItems: "center",
   },
   countScore: {
     fontSize: 12,
     fontFamily: "PoppinsMedium",
-    paddingTop: 4
+    paddingTop: 4,
   },
   more: {
     justifyContent: "center",
+    alignSelf: "center",
     paddingHorizontal: 12,
-  }
+    paddingVertical: 12,
+    height: "90%",
+    borderLeftWidth: 2,
+    borderLeftColor: Colors.silverSand,
+  },
 });
