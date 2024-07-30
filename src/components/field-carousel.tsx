@@ -33,7 +33,7 @@ const FieldCarousel = ({ data }: { data: FieldData[] }) => {
     let slide = Math.ceil(
       nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width
     );
-    setPageIndex(slide);
+    setPageIndex(slide - 1);
   };
 
   return (
@@ -42,7 +42,7 @@ const FieldCarousel = ({ data }: { data: FieldData[] }) => {
         horizontal
         pagingEnabled
         snapToAlignment="center"
-        onScroll={handleSlidePageChanged}
+        onMomentumScrollEnd={handleSlidePageChanged}
         showsHorizontalScrollIndicator={false}
       >
         {data.map((item, index) => (
