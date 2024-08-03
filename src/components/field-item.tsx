@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 8,
     alignItems: "center",
-    marginBottom: 25,
+    marginBottom: 15,
     width: "100%",
   },
   wrapper: {

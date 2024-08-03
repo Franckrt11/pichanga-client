@@ -59,7 +59,7 @@ const Home = () => {
             <LocationButton geoname={geoName} />
           </View>
           <Text style={styles.title}>CANCHAS CERCANAS</Text>
-          <View style={{ width: "100%", marginBottom: 30 }}>
+          <View style={{ width: "100%", height: 160, marginBottom: 15 }}>
             <FieldCarousel data={fields} />
           </View>
 

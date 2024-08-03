@@ -1,12 +1,10 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import { router } from "expo-router";
-import { format, parseISO } from "date-fns";
-import { es } from "date-fns/locale";
 import ZoomPlusIcon from "@/src/components/icons/zoom-plus-icon";
 import CashIcon from "@/src/components/icons/cash-icon";
 import Colors from "@/src/utils/Colors";
 import { FieldData, HourRange } from "@/src/utils/Types";
-import { HOUR_LIST, RESERVE_STATUS } from "@/src/utils/Constants";
+import { getStatus, getDayName, getHourName } from "@/src/utils/Helpers";
 
 const ReservationItem = ({
   id,
@@ -23,30 +21,6 @@ const ReservationItem = ({
   status: string;
   inscription: boolean;
 }) => {
-  const getHourName = (key: number) => {
-    if (key) {
-      const filtered = HOUR_LIST.filter((hour) => {
-        return hour.value === key;
-      });
-      return filtered[0].text;
-    }
-    return;
-  };
-
-  const getDayName = (day: string) => {
-    const date = parseISO(day);
-    return format(date, "dd MMM yyyy", { locale: es });
-  };
-
-  const getStatus = (status: string) => {
-    if (status) {
-      const filtered = RESERVE_STATUS.filter((statusObj) => {
-        return statusObj.value === status;
-      });
-      return filtered[0].text;
-    }
-    return;
-  };
 
   const hasInscription = (value:boolean) => {
     if (value) return <CashIcon />;

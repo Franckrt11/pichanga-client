@@ -179,7 +179,7 @@ export interface ReserveData {
   game: string;
   price: number;
   inscription: boolean;
-  status?: string;
+  status: string;
   field_hour_id: number;
   field_id: number;
   user_id: number;

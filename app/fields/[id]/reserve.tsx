@@ -44,6 +44,10 @@ interface HoursList {
   text: string;
 }
 
+interface CurrentMode {
+  [key: string]: boolean;
+}
+
 const INIT_MODES = {
   "5v5": false,
   "6v6": false,
@@ -69,7 +73,7 @@ const FieldReserve = () => {
   const [price, setPrice] = useState(0);
   const [disableButton, setDisableButton] = useState<boolean>(false);
   const [games, setGames] = useState<GameData[]>([]);
-  const [currentModes, setCurrentModes] = useState(INIT_MODES);
+  const [currentModes, setCurrentModes] = useState<CurrentMode>(INIT_MODES);
 
   const [dayHours, setDayHours] = useState<DayData[]>([]);
 
@@ -185,7 +189,7 @@ const FieldReserve = () => {
   };
 
   const changeModeState = (state: boolean, mode: string) => {
-    setCurrentModes({ ...currentModes, [mode]: state });
+    setCurrentModes({ ...INIT_MODES, [mode]: state });
   };
 
   const toggleInscription = () => setHasInscription(!hasIscription);
@@ -196,19 +200,21 @@ const FieldReserve = () => {
         if (currentModes[key as keyof typeof currentModes]) return key;
       })
       .filter((element) => element !== undefined);
-
-    const data = {
-      date: format(currentDate as Date, "yyyy/MM/dd"),
-      time,
-      game: JSON.stringify(filteredModes),
-      price,
-      inscription: hasIscription,
-      field_hour_id: field?.id ?? 0,
-      field_id: params.id as unknown as number,
-      user_id: state.id,
-    };
-    const response = await saveReserve(data, token);
-    if (response.status) router.replace("/home");
+    if (filteredModes[0]) {
+      const data = {
+        date: format(currentDate as Date, "yyyy/MM/dd"),
+        time,
+        game: filteredModes[0],
+        price,
+        status: 'pending', // dummy data
+        inscription: hasIscription,
+        field_hour_id: field?.id ?? 0,
+        field_id: params.id as unknown as number,
+        user_id: state.id,
+      };
+      const response = await saveReserve(data, token);
+      if (response.status) router.replace("/home");
+    }
   };
 
   useEffect(() => {
@@ -337,7 +343,7 @@ const FieldReserve = () => {
               key={`modes-${index}`}
               radius={25}
               color={Colors.metallicGreen}
-              checked={false}
+              checked={currentModes[game.mode]}
               mode={game.mode}
               text={game.text}
               onChangeMode={changeModeState}

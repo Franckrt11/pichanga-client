@@ -7,54 +7,17 @@ import { LayoutStyles } from "@/src/utils/Styles";
 import ChildPage from "@/src/components/layouts/child-page";
 import ImageCarousel from "@/src/components/image-carousel";
 import ChatIcon from "@/src/components/icons/chat-icon";
-import StarIcon from "@/src/components/icons/star-icon";
 import { useAuthContext } from "@/src/context/Auth";
 import { fetchField, fetchFieldPictures } from "@/src/models/Field";
 import { fetchChatRoom, createChatRoom } from "@/src/models/Chat";
 import { FieldData, FieldPictureData } from "@/src/utils/Types";
+import ContentRow from "@/src/components/content-row";
+import RatingRow from "@/src/components/rating-row";
 
 interface PictureList {
   id: number;
   filename: string | undefined;
 }
-
-const ContentRow = ({
-  label,
-  data,
-}: {
-  label: string;
-  data: string | undefined;
-}) => {
-  return (
-    <View style={styles.contentRow}>
-      <Text style={styles.contentLabel}>{label}</Text>
-      <Text style={styles.contentData}>{data}</Text>
-    </View>
-  );
-};
-
-const RatingRow = ({ score }: { score: number }) => {
-  let star_array = [];
-
-  for (let i = 0; i < 5; i++) {
-    if (i < score) {
-      star_array.push(true);
-    } else {
-      star_array.push(false);
-    }
-  }
-
-  return (
-    <View style={styles.contentRow}>
-      <Text style={styles.contentLabel}>Ranking</Text>
-      <View style={{ flexDirection: "row", gap: 5, marginLeft: 20 }}>
-        {star_array.map((star, index) => (
-          <StarIcon key={index} size={28} active={star} />
-        ))}
-      </View>
-    </View>
-  );
-};
 
 const FieldDetails = () => {
   const params = useLocalSearchParams();
@@ -204,21 +167,6 @@ const FieldDetails = () => {
 export default FieldDetails;
 
 const styles = StyleSheet.create({
-  contentRow: {
-    marginBottom: 20,
-  },
-  contentLabel: {
-    fontFamily: "PoppinsMedium",
-    fontSize: 18,
-    marginBottom: 10,
-    color: Colors.maastrichtBlue,
-  },
-  contentData: {
-    marginLeft: 20,
-    fontFamily: "PoppinsSemiBold",
-    fontSize: 22,
-    color: Colors.maastrichtBlue,
-  },
   buttom: {
     backgroundColor: Colors.white,
     borderRadius: 20,
