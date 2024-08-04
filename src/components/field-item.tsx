@@ -3,8 +3,8 @@ import { router } from "expo-router";
 import { Image } from "expo-image";
 import Colors from "@/src/utils/Colors";
 import Images from "@/src/utils/Images";
-import StarIcon from "@/src/components/icons/star-icon";
 import ZoomPlusIcon from "@/src/components/icons/zoom-plus-icon";
+import Rating from "@/src/components/rating";
 import { getFieldUrl } from "@/src/utils/Helpers";
 
 const { width } = Dimensions.get("window");
@@ -34,14 +34,7 @@ const FieldItem = ({ id, name, district, portrait }: FieldProps) => {
             <View style={styles.description}>
               <Text style={styles.title}>{name}</Text>
               <Text style={styles.subtitle}>{district}</Text>
-              <View style={styles.score}>
-                <StarIcon size={15} active={true} />
-                <StarIcon size={15} active={true} />
-                <StarIcon size={15} active={true} />
-                <StarIcon size={15} active={false} />
-                <StarIcon size={15} active={false} />
-                <Text style={styles.countScore}>(50)</Text>
-              </View>
+              <Rating score={2} comments={32} />
             </View>
             <View style={styles.more}>
               <Pressable onPress={() => router.push(`/fields/${id}`)}>
@@ -95,17 +88,6 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 16,
     fontFamily: "PoppinsMedium",
-  },
-  score: {
-    flexDirection: "row",
-    gap: 5,
-    marginTop: 5,
-    alignItems: "center",
-  },
-  countScore: {
-    fontSize: 12,
-    fontFamily: "PoppinsMedium",
-    paddingTop: 4,
   },
   more: {
     justifyContent: "center",
