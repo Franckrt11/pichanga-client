@@ -1,31 +1,26 @@
 import { StyleSheet, Pressable, View } from "react-native";
-import { useState, useEffect } from "react";
+import { router } from "expo-router";
 import Colors from "@/src/utils/Colors";
 import FieldMapIcon from "@/src/components/icons/fieldmap-icon";
 import FieldListIcon from "@/src/components/icons/fieldlist-icon";
 import SwapIcon from "@/src/components/icons/swap-icon";
 
-const FieldControl = ({ value, onValueChange }: { value: boolean, onValueChange:any }) => {
-  const [list, setList] = useState<boolean>(true);
-
-  const changeValue = () => {
-    setList(!list);
-    onValueChange();
-  };
-
-  useEffect(() => {
-    setList(value);
-  },[value]);
-
+const FieldControl = ({ route, icon }: { route: string; icon: string }) => {
   return (
     <View
       style={{ flexDirection: "row", alignItems: "center", paddingRight: 10 }}
     >
-      <Pressable
-        style={styles.button}
-        onPress={() => changeValue()}
-      >
-        {list ? <FieldListIcon size={30} /> : <FieldMapIcon size={30} />}
+      <Pressable style={styles.button} onPress={() => router.replace(route)}>
+        {(() => {
+          switch (icon) {
+            case "map":
+              return <FieldMapIcon size={30} />;
+            case "list":
+              return <FieldListIcon size={30} />;
+            default:
+              return null;
+          }
+        })()}
         <SwapIcon style={styles.icon} size={16} />
       </Pressable>
     </View>

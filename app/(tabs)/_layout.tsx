@@ -39,6 +39,7 @@ const TabsLayout = () => {
       <Tabs.Screen
         name="fields"
         options={{
+          headerShown: false,
           headerTitle: () => <></>,
           tabBarLabelStyle: styles.tabBarLabel,
           tabBarLabel: "CANCHAS",
