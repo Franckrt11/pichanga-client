@@ -44,7 +44,7 @@ const FieldsMap = () => {
   const [modalField, setModalField] = useState<ModalField | null>(null);
 
   const getNearbyFields = async (coordinates: LatLng) => {
-    const fields = await fetctNearbyFields(coordinates, 10, token);
+    const fields = await fetctNearbyFields(coordinates, 5, token);
     setFields(fields.data);
   };
 
@@ -86,12 +86,13 @@ const FieldsMap = () => {
       <MapView
         provider={PROVIDER_GOOGLE}
         style={styles.map}
-        initialRegion={{
+        region={{
           latitude: coords.latitude,
           longitude: coords.longitude,
           latitudeDelta: 0.02,
           longitudeDelta: 0.005,
         }}
+        showsUserLocation={true}
       >
         {fields?.map((field, index) => (
           <Marker

@@ -82,11 +82,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: "PoppinsSemiBold",
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: 15,
     fontFamily: "PoppinsMedium",
   },
   more: {

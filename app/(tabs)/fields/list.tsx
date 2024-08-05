@@ -39,7 +39,6 @@ const FieldsList = () => {
       longitude: location ? location.longitude : START_LOCATION.longitude,
     });
     getNearbyFields(coords);
-    console.log("🌏 ~ location", location);
   }, [location]);
 
   return (
@@ -70,7 +69,10 @@ const FieldsList = () => {
 
       <ScrollView style={{ paddingTop: 30 }}>
         {fields?.map((field, index) => (
-          <View key={`list-${index}`} style={{ alignItems: "center" }}>
+          <View
+            key={`list-${index}`}
+            style={{ alignItems: "center", marginBottom: 15, height: 130 }}
+          >
             <FieldItem
               id={field.id}
               name={field.name}
@@ -79,6 +81,7 @@ const FieldsList = () => {
             />
           </View>
         ))}
+        <View style={{ height: 50 }} />
       </ScrollView>
     </SafeAreaView>
   );
