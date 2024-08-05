@@ -99,7 +99,6 @@ const styles = StyleSheet.create({
   dots: {
     height: 15,
     width: 15,
-    marginHorizontal: 10,
     borderWidth: 1,
     borderRadius: 15,
     borderColor: Colors.maastrichtBlue,
@@ -107,8 +106,10 @@ const styles = StyleSheet.create({
   },
   paginationWrapper: {
     flexDirection: "row",
+    gap: 8,
     marginTop: 10,
     width: "100%",
+    alignItems: "center",
     justifyContent: "center",
   },
 });
