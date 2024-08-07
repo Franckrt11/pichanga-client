@@ -1,4 +1,4 @@
-// import { Platform } from "react-native";
+import { LatLng } from "react-native-maps";
 
 export const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
@@ -7,6 +7,11 @@ export const SOCKET_URL = process.env.EXPO_PUBLIC_SOCKET_URL;
 export const FETCH_HEADERS = {
   Accept: "application/json",
   "Content-Type": "application/json",
+};
+
+export const START_LOCATION: LatLng = {
+  latitude:  -12.0459667,
+  longitude: -77.0305709,
 };
 
 export const RESERVE_STATUS = [

@@ -27,7 +27,7 @@ const Home = () => {
   };
 
   const getNearbyFields = async (cords: LatLng) => {
-    const fields = await fetctNearbyFields(coords, 2.5, token);
+    const fields = await fetctNearbyFields(coords, 5, token);
     setFields(fields.data);
   };
 
