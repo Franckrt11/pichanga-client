@@ -145,7 +145,6 @@ const User = () => {
   }, [cameraStatus, pickCamera, requestCameraPermission]);
 
   useEffect(() => {
-    console.log('state', state);
     setName(state.name);
     setLastname(state.lastname);
     setPhone(state.phone);
