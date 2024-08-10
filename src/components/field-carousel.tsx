@@ -1,8 +1,17 @@
-import { StyleSheet, ScrollView, View, NativeScrollEvent } from "react-native";
+import {
+  StyleSheet,
+  ScrollView,
+  View,
+  NativeScrollEvent,
+  Dimensions,
+} from "react-native";
 import { useState } from "react";
 import FieldItem from "@/src/components/field-item";
 import Colors from "@/src/utils/Colors";
 import { FieldData } from "@/src/utils/Types";
+
+const { width } = Dimensions.get("window");
+const FIELD_CONTAINER = width * 0.9;
 
 const Pagination = ({ data, page }: { data: FieldData[]; page: number }) => {
   return (
@@ -33,7 +42,7 @@ const FieldCarousel = ({ data }: { data: FieldData[] }) => {
     let slide = Math.ceil(
       nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width
     );
-    setPageIndex(slide - 1);
+    setPageIndex(slide);
   };
 
   return (
@@ -46,7 +55,10 @@ const FieldCarousel = ({ data }: { data: FieldData[] }) => {
         showsHorizontalScrollIndicator={false}
       >
         {data.map((item, index) => (
-          <View key={`field-item-${index}`} style={{ paddingHorizontal: 5 }}>
+          <View
+            key={`field-item-${index}`}
+            style={{ paddingHorizontal: 5, width: FIELD_CONTAINER }}
+          >
             <FieldItem
               id={item.id}
               name={item.name}

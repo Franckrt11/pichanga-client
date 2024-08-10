@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable, Dimensions } from "react-native";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 import { router } from "expo-router";
 import { Image } from "expo-image";
 import Colors from "@/src/utils/Colors";
@@ -6,9 +6,6 @@ import Images from "@/src/utils/Images";
 import ZoomPlusIcon from "@/src/components/icons/zoom-plus-icon";
 import Rating from "@/src/components/rating";
 import { getFieldUrl } from "@/src/utils/Helpers";
-
-const { width } = Dimensions.get("window");
-const ITEM_LENGTH = width * 0.9;
 
 interface FieldProps {
   id: number;
@@ -19,7 +16,7 @@ interface FieldProps {
 
 const FieldItem = ({ id, name, district, portrait }: FieldProps) => {
   return (
-    <View style={[styles.container, { width: ITEM_LENGTH }]}>
+    <View style={styles.container}>
       <View style={styles.wrapper}>
         <View style={styles.header}>
           <View style={{ width: 120, overflow: "hidden" }}>
