@@ -1,4 +1,4 @@
-import { View, SafeAreaView, ScrollView, StyleProp, ViewStyle  } from "react-native";
+import { View, SafeAreaView, ScrollView, StyleProp, ViewStyle, Platform, KeyboardAvoidingView  } from "react-native";
 import { ReactNode } from "react";
 import { Stack } from "expo-router";
 import { LayoutStyles } from "@/src/utils/Styles";
@@ -16,6 +16,11 @@ const ChildPage = ({ style, children }: { style?: StyleProp<ViewStyle>, children
           headerLeft: () => <Back />,
         }}
       />
+      <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          keyboardVerticalOffset={120}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined }
+        >
       <ScrollView
         style={{ paddingTop: 20 }}
         contentContainerStyle={{ alignItems: "center"}}
@@ -24,6 +29,7 @@ const ChildPage = ({ style, children }: { style?: StyleProp<ViewStyle>, children
           {children}
         </View>
       </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   )
 };
