@@ -30,7 +30,7 @@ const FieldsList = () => {
 
   const getNearbyFields = async (coordinates: LatLng) => {
     const fields = await fetctNearbyFields(coordinates, 10, token);
-    setFields(fields.data);
+    if (fields.status) setFields(fields.data);
   };
 
   useEffect(() => {
@@ -68,10 +68,10 @@ const FieldsList = () => {
       </View>
 
       <ScrollView style={{ paddingTop: 30 }}>
-        {fields?.map((field, index) => (
+        {fields.map((field, index) => (
           <View
             key={`list-${index}`}
-            style={{ alignItems: "center", marginBottom: 15, height: 130 }}
+            style={{ alignItems: "center", marginBottom: 15, height: 130, paddingHorizontal: 20 }}
           >
             <FieldItem
               id={field.id}
