@@ -16,7 +16,7 @@ const FIELD_CONTAINER = width * 0.9;
 const Pagination = ({ data, page }: { data: FieldData[]; page: number }) => {
   return (
     <View style={styles.paginationWrapper}>
-      {data.map((_, idx) => {
+      {data && data.map((_, idx) => {
         return (
           <View
             key={`pagination-dot-${idx}`}
@@ -54,7 +54,7 @@ const FieldCarousel = ({ data }: { data: FieldData[] }) => {
         onMomentumScrollEnd={handleSlidePageChanged}
         showsHorizontalScrollIndicator={false}
       >
-        {data.map((item, index) => (
+        {data && data.map((item, index) => (
           <View
             key={`field-item-${index}`}
             style={{ paddingHorizontal: 5, width: FIELD_CONTAINER }}
