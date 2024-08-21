@@ -19,7 +19,7 @@ import {
   BottomSheetModalProvider,
   BottomSheetBackdrop,
 } from "@gorhom/bottom-sheet";
-import { Picker } from "@react-native-picker/picker";
+import { Dropdown } from "react-native-element-dropdown";
 import { useAuthContext } from "@/src/context/Auth";
 import { useUserContext } from "@/src/context/User";
 import { LayoutStyles, PageStyles } from "@/src/utils/Styles";
@@ -272,32 +272,16 @@ const User = () => {
                 keyboardType="email-address"
                 error={errors ? errors.email : null}
               />
-              <View
-                style={[
-                  PageStyles.pickerContainer,
-                  { marginBottom: 5, borderWidth: 1 },
-                ]}
-              >
-                <Picker
-                  style={PageStyles.picker}
-                  selectedValue={district}
-                  onValueChange={(value, itemIndex) => setDistrict(value)}
-                >
-                  <Picker.Item
-                    fontFamily="PoppinsMedium"
-                    label="Distritos"
-                    value=""
-                  />
-                  {LIMA_DISTRICTS.map((district, index) => (
-                    <Picker.Item
-                      fontFamily="PoppinsMedium"
-                      key={index}
-                      label={district}
-                      value={district}
-                    />
-                  ))}
-                </Picker>
-              </View>
+              <Dropdown
+                style={PageStyles.dropdown}
+                data={LIMA_DISTRICTS}
+                labelField="value"
+                valueField="value"
+                placeholder="Distrito"
+                placeholderStyle={PageStyles.dropdownPlaceholder}
+                onChange={(item) => setDistrict(item.value)}
+                value={district}
+              />
               {errors?.district ? (
                 <Text style={styles.errorMessages}>{errors.district}</Text>
               ) : (

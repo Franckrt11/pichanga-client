@@ -3,12 +3,12 @@ import {
   ActivityIndicator,
   Text,
   View,
-  StyleSheet
+  StyleSheet,
 } from "react-native";
 import { useState } from "react";
-import { Link } from "expo-router";
+import { Link, Href } from "expo-router";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import { Picker } from "@react-native-picker/picker";
+import { Dropdown } from "react-native-element-dropdown";
 import { useAuthContext } from "@/src/context/Auth";
 import { LayoutStyles, PageStyles } from "@/src/utils/Styles";
 import Colors from "@/src/utils/Colors";
@@ -27,7 +27,7 @@ const CheckboxText = () => {
     >
       Estoy de acuerdo con los
       <Link
-        href={"/(auth)/terms"}
+        href={"/(auth)/terms" as Href<"/(auth)/terms">}
         style={{ color: Colors.metallicGreen, marginLeft: 4 }}
       >
         Términos y condiciones
@@ -85,19 +85,21 @@ const Register = () => {
           keyboardType="email-address"
           error={errors ? errors.email : null}
         />
-        <View style={[PageStyles.pickerContainer, { marginBottom: 5 }]}>
-          <Picker
-            style={PageStyles.picker}
-            selectedValue={district}
-            onValueChange={(value, itemIndex) => setDistrict(value)}
-          >
-            <Picker.Item fontFamily="PoppinsMedium" label="Distritos" value="" />
-            {LIMA_DISTRICTS.map((district, index) => (
-              <Picker.Item fontFamily="PoppinsMedium" key={index} label={district} value={district} />
-            ))}
-          </Picker>
-        </View>
-        {errors?.district ? <Text style={styles.errorMessages}>{errors.district}</Text> : <View style={{ marginBottom: 15}}/>}
+        <Dropdown
+          style={PageStyles.dropdown}
+          data={LIMA_DISTRICTS}
+          labelField="value"
+          valueField="value"
+          placeholder="Distrito"
+          placeholderStyle={PageStyles.dropdownPlaceholder}
+          onChange={(item) => setDistrict(item.value)}
+          value={district}
+        />
+        {errors?.district ? (
+          <Text style={styles.errorMessages}>{errors.district}</Text>
+        ) : (
+          <View style={{ marginBottom: 15 }} />
+        )}
         <Input
           placeholder="Contraseña"
           value={password}
@@ -122,7 +124,9 @@ const Register = () => {
           textComponent={<CheckboxText />}
           onPress={() => setCheckbox(!checkbox)}
         />
-        {errors?.checkbox ? <Text style={styles.errorMessages}>{errors.checkbox}</Text> : null}
+        {errors?.checkbox ? (
+          <Text style={styles.errorMessages}>{errors.checkbox}</Text>
+        ) : null}
       </View>
       <View style={{ marginBottom: 30, width: "100%" }}>
         {loading ? (
@@ -138,7 +142,7 @@ const Register = () => {
                 district,
                 password,
                 password_confirmation,
-                checkbox
+                checkbox,
               })
             }
             style={PageStyles.button}

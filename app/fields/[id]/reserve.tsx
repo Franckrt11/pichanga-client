@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { format, getDay } from "date-fns";
 import { es } from "date-fns/locale";
-import { Picker } from "@react-native-picker/picker";
+import { Dropdown } from "react-native-element-dropdown";
 import { fetchField, fetchFieldDays } from "@/src/models/Field";
 import { saveReserve } from "@/src/models/Reserve";
 import { useAuthContext } from "@/src/context/Auth";
@@ -16,6 +16,7 @@ import Switch from "@/src/components/switch";
 import ChildPage from "@/src/components/layouts/child-page";
 import ButtonCheckbox from "@/src/components/button-checkbox";
 import CalendarIcon from "@/src/components/icons/calendar-icon";
+import ArrowDownIcon from "@/src/components/icons/arrowdown-icon";
 import { HOUR_LIST } from "@/src/utils/Constants";
 
 const DAY_NAMES = [
@@ -57,6 +58,33 @@ const INIT_MODES = {
   "10v10": false,
   "11v11": false,
 };
+
+const TIME_LIST = [
+  {
+    label: "1/2 hora",
+    value: 0.5,
+  },
+  {
+    label: "1 hora",
+    value: 1,
+  },
+  {
+    label: "1 1/2 hora",
+    value: 1.5,
+  },
+  {
+    label: "2 horas",
+    value: 2,
+  },
+  {
+    label: "2 1/2 horas",
+    value: 2.5,
+  },
+  {
+    label: "3 horas",
+    value: 3,
+  },
+];
 
 const FieldReserve = () => {
   const params = useLocalSearchParams();
@@ -158,12 +186,12 @@ const FieldReserve = () => {
 
   const getPrice = (time: number) => {
     if (currentDate) {
-      const day_filtered = dayHours.filter(dayObj => {
+      const day_filtered = dayHours.filter((dayObj) => {
         return dayObj.day === getDay(currentDate);
       });
 
-      const hours_filtered = day_filtered[0].hours.filter(hourObj => {
-        return hour >= hourObj.start && hour <= hourObj.end ;
+      const hours_filtered = day_filtered[0].hours.filter((hourObj) => {
+        return hour >= hourObj.start && hour <= hourObj.end;
       });
 
       const priceObj = hours_filtered[0].price;
@@ -206,7 +234,7 @@ const FieldReserve = () => {
         time,
         game: filteredModes[0],
         price,
-        status: 'pending', // dummy data
+        status: "pending", // dummy data
         inscription: hasIscription,
         field_hour_id: field?.id ?? 0,
         field_id: params.id as unknown as number,
@@ -264,65 +292,53 @@ const FieldReserve = () => {
           <View style={styles.inputLabel}>
             <Text style={styles.inputLabelText}>Desde las</Text>
           </View>
-          <View style={[styles.inputField, styles.pickerContainer]}>
-            <Picker
-              style={{
-                fontFamily: "PoppinsMedium",
-                marginTop: -10,
-              }}
-              selectedValue={hour}
-              onValueChange={(value, itemIndex) => setHour(value)}
-            >
-              {hoursList.map((hour, index) => (
-                <Picker.Item
-                  key={`hours-${index}`}
-                  fontFamily="PoppinsMedium"
-                  label={hour.text}
-                  value={hour.value}
-                />
-              ))}
-            </Picker>
-          </View>
+          <Dropdown
+            style={[PageStyles.dropdown, styles.dropdown]}
+            data={hoursList}
+            labelField="text"
+            valueField="value"
+            placeholder="Horario"
+            placeholderStyle={[
+              PageStyles.dropdownPlaceholder,
+              { paddingHorizontal: 10 },
+            ]}
+            onChange={(item) => {
+              setHour(item.value);
+              setTime(1);
+              getPrice(1);
+            }}
+            value={hour}
+            selectedTextStyle={styles.dropdownSelectectText}
+            renderRightIcon={() => (
+              <ArrowDownIcon size={10} style={{ marginRight: 10 }} />
+            )}
+          />
         </View>
 
         <View style={styles.inputRow}>
           <View style={styles.inputLabel}>
             <Text style={styles.inputLabelText}>Tiempo</Text>
           </View>
-          <View style={[styles.inputField, styles.pickerContainer]}>
-            <Picker
-              style={{
-                fontFamily: "PoppinsMedium",
-                marginTop: -10,
-              }}
-              selectedValue={time}
-              onValueChange={(value, itemIndex) => {
-                setTime(value);
-                getPrice(value);
-              }}
-            >
-              <Picker.Item
-                fontFamily="PoppinsMedium"
-                label="1/2 hora"
-                value={0.5}
-              />
-              <Picker.Item
-                fontFamily="PoppinsMedium"
-                label="1 hora"
-                value={1}
-              />
-              <Picker.Item
-                fontFamily="PoppinsMedium"
-                label="1 1/2 hora"
-                value={1.5}
-              />
-              <Picker.Item
-                fontFamily="PoppinsMedium"
-                label="2 horas"
-                value={2}
-              />
-            </Picker>
-          </View>
+          <Dropdown
+            style={[PageStyles.dropdown, styles.dropdown]}
+            data={TIME_LIST}
+            labelField="label"
+            valueField="value"
+            placeholder="Tiempo"
+            placeholderStyle={[
+              PageStyles.dropdownPlaceholder,
+              { paddingHorizontal: 10 },
+            ]}
+            onChange={(item) => {
+              setTime(item.value);
+              getPrice(item.value);
+            }}
+            value={time}
+            selectedTextStyle={styles.dropdownSelectectText}
+            renderRightIcon={() => (
+              <ArrowDownIcon size={10} style={{ marginRight: 10 }} />
+            )}
+          />
         </View>
       </View>
 
@@ -455,5 +471,17 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     height: 35,
     overflow: "hidden",
+  },
+  dropdown: {
+    flex: 1,
+    paddingHorizontal: 0,
+    paddingVertical: 3,
+    borderRadius: 20,
+    marginBottom: 6,
+  },
+  dropdownSelectectText: {
+    paddingHorizontal: 15,
+    fontFamily: "PoppinsMedium",
+    fontSize: 14,
   },
 });
