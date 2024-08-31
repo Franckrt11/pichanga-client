@@ -5,6 +5,7 @@ import {
   StyleSheet,
   StyleProp,
   TextStyle,
+  KeyboardTypeOptions
 } from "react-native";
 import { useState } from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -29,6 +30,7 @@ const Input = ({
   onChangeText = (text: string) => {},
   styles,
   theme,
+  keyboardType
 }: InputProps) => {
   const [hidePassword, setHidePassword] = useState(password);
   const errorColor = theme === "light" ? "red" : "white";
@@ -48,6 +50,7 @@ const Input = ({
         style={styles}
         placeholder={placeholder}
         placeholderTextColor={Colors.silverSand}
+        keyboardType={(keyboardType ?? "default") as KeyboardTypeOptions}
       />
       {password && (
         <Icon

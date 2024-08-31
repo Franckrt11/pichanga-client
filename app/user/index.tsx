@@ -260,7 +260,7 @@ const User = () => {
                 onChangeText={(text) => setPhone(text)}
                 styles={styles.input}
                 theme="light"
-                keyboardType="numeric"
+                keyboardType="number-pad"
                 error={errors ? errors.phone : null}
               />
               <Input

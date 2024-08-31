@@ -73,7 +73,7 @@ const Register = () => {
           onChangeText={(text: string) => setPhone(text)}
           styles={PageStyles.input}
           theme="light"
-          keyboardType="numeric"
+          keyboardType="number-pad"
           error={errors ? errors.phone : null}
         />
         <Input
