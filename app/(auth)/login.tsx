@@ -9,7 +9,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { useState } from "react";
-import { Stack, Link } from "expo-router";
+import { Stack, Link, Href } from "expo-router";
 import { useAuthContext } from "@/src/context/Auth";
 import Input from "@/src/components/input";
 import GoogleLogo from "@/src/components/icons/google-logo";
@@ -81,7 +81,7 @@ const Login = () => {
             <Text style={styles.text}>
               ¿No tienes una cuenta?
               <Link
-                href={"(auth)/register"}
+                href={"(auth)/register" as Href<"(auth)/register">}
                 style={{ color: Colors.metallicGreen, marginLeft: 4 }}
               >
                 Registrarse

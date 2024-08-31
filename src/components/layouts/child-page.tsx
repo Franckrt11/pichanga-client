@@ -34,7 +34,7 @@ const ChildPage = ({
         behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
         <ScrollView
-          style={{ paddingTop: 20 }}
+          style={{ paddingTop: 10 }}
           contentContainerStyle={{ alignItems: "center" }}
         >
           <View style={[LayoutStyles.scrollContainer, style]}>{children}</View>
