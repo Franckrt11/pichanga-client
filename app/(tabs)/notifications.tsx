@@ -1,6 +1,7 @@
 import { Text, View, SafeAreaView, ScrollView } from "react-native";
 import React from "react";
 import { LayoutStyles } from "@/src/utils/Styles";
+import ActivityBlock from "@/src/components/activity-block";
 
 const Notifications = () => {
   return (
@@ -13,6 +14,7 @@ const Notifications = () => {
       >
         <View style={LayoutStyles.scrollContainer}>
           <Text style={LayoutStyles.pageTitle}>NOTIFICACIONES</Text>
+          <ActivityBlock />
         </View>
       </ScrollView>
     </SafeAreaView>
