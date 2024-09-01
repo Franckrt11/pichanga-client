@@ -10,6 +10,13 @@ import {
 } from "react-native";
 import { useState } from "react";
 import { Stack, Link, Href } from "expo-router";
+// import {
+//   GoogleSignin,
+//   GoogleSigninButton,
+//   NativeModuleError,
+//   statusCodes,
+// } from '@react-native-google-signin/google-signin';
+import type { User } from '@react-native-google-signin/google-signin';
 import { useAuthContext } from "@/src/context/Auth";
 import Input from "@/src/components/input";
 import GoogleLogo from "@/src/components/icons/google-logo";
@@ -22,6 +29,16 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { signIn, loading, errors } = useAuthContext();
+
+  // const googleSignIn =async () => {
+  //   try {
+  //     await GoogleSignin.hasPlayServices();
+  //     const userInfo = await GoogleSignin.signIn();
+  //     console.log("✨ ~ (auth)/login.ts ~ googleSignIn() ~ userInfo:", userInfo);
+  //   } catch (error) {
+  //     console.log("🚩 ~ (auth)/login.ts ~ googleSignIn() ~ error:", error);
+  //   }
+  // };
 
   return (
     <SafeAreaView
@@ -95,6 +112,11 @@ const Login = () => {
               <GoogleLogo size={20} />
               <Text style={{ color: Colors.maastrichtBlue, fontFamily: "PoppinsMedium", marginLeft: 10 }}>Ingresar con Google</Text>
             </Pressable>
+            {/*<GoogleSigninButton
+              size={GoogleSigninButton.Size.Standard}
+              color={GoogleSigninButton.Color.Dark}
+              onPress={googleSignIn}
+            /> */}
             <Pressable style={[styles.buttonOutline, {flexDirection: "row", justifyContent: "center"}]}>
               <FacebookLogo size={20} />
               <Text style={{ color: Colors.maastrichtBlue, fontFamily: "PoppinsMedium", marginLeft: 10 }}>Ingresar con Facebook</Text>

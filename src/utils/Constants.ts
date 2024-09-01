@@ -1,8 +1,11 @@
 import { LatLng } from "react-native-maps";
 
 export const API_URL = process.env.EXPO_PUBLIC_API_URL;
+// export const API_URL = "http://10.0.2.2/pichanga/";
 
 export const SOCKET_URL = process.env.EXPO_PUBLIC_SOCKET_URL;
+// export const SOCKET_URL = "http://localhost:3000"
+
 
 export const FETCH_HEADERS = {
   Accept: "application/json",
