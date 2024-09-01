@@ -184,7 +184,7 @@ const FieldReserve = () => {
     setHoursList(hours_allowed);
   };
 
-  const getPrice = (time: number) => {
+  const getPrice = (time: number, hour: number) => {
     if (currentDate) {
       const day_filtered = dayHours.filter((dayObj) => {
         return dayObj.day === getDay(currentDate);
@@ -193,7 +193,6 @@ const FieldReserve = () => {
       const hours_filtered = day_filtered[0].hours.filter((hourObj) => {
         return hour >= hourObj.start && hour <= hourObj.end;
       });
-
       const priceObj = hours_filtered[0].price;
 
       const time_whole = Math.floor(time);
@@ -241,7 +240,11 @@ const FieldReserve = () => {
         user_id: state.id,
       };
       const response = await saveReserve(data, token);
-      if (response.status) router.replace("/home");
+
+      if (response.status) {
+        router.setParams({ reload: "home" });
+        router.replace("/home");
+      }
     }
   };
 
@@ -276,7 +279,7 @@ const FieldReserve = () => {
             <TextInput
               value={date}
               onChangeText={setDate}
-              // autoCorrect={false}
+              editable={false}
               style={styles.inputFieldInput}
             />
             <Pressable
@@ -305,9 +308,9 @@ const FieldReserve = () => {
             onChange={(item) => {
               setHour(item.value);
               setTime(1);
-              getPrice(1);
+              getPrice(1, item.value);
             }}
-            value={hour}
+            value={hoursList.find((item) => item.value === hour)}
             selectedTextStyle={styles.dropdownSelectectText}
             renderRightIcon={() => (
               <ArrowDownIcon size={10} style={{ marginRight: 10 }} />
@@ -331,9 +334,9 @@ const FieldReserve = () => {
             ]}
             onChange={(item) => {
               setTime(item.value);
-              getPrice(item.value);
+              getPrice(item.value, hour);
             }}
-            value={time}
+            value={TIME_LIST.find((item) => item.value === time)}
             selectedTextStyle={styles.dropdownSelectectText}
             renderRightIcon={() => (
               <ArrowDownIcon size={10} style={{ marginRight: 10 }} />

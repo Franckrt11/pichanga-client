@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import { router, useFocusEffect, useGlobalSearchParams } from "expo-router";
 import { LatLng } from "react-native-maps";
 import FieldCarousel from "@/src/components/field-carousel";
 import { LayoutStyles } from "@/src/utils/Styles";
@@ -15,6 +16,7 @@ import { START_LOCATION } from "@/src/utils/Constants";
 const Home = () => {
   const { location, geoName } = useLocationContext();
   const { token, userId } = useAuthContext();
+  const { reload } = useGlobalSearchParams<{reload?: string}>();
   const [reserves, setReserves] = useState<ReserveData[]>([]);
   const [fields, setFields] = useState<FieldData[]>([]);
   const [coords, setCoords] = useState<LatLng>(START_LOCATION);
@@ -40,6 +42,16 @@ const Home = () => {
     getNearbyFields(coords);
     // console.log('🚖 ~ token', token);
   }, [userId]);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (reload === 'home') {
+        console.log('👩‍🦱 ~ home.tsx ~ useFocusEffect ~ reload:home');
+        getReserves();
+        router.setParams({ reload: undefined });
+      }
+    }, [])
+  );
 
   return (
     <SafeAreaView style={LayoutStyles.whiteContainer}>
