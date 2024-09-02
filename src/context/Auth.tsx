@@ -262,6 +262,8 @@ export const AuthProvider = ({ children }: ProviderProps) => {
 
   const configureGoogleSignin = () => GoogleSignin.configure();
 
+  const initializeFacebookSdk = () => Settings.initializeSDK();
+
   const requestTracking = async () => {
     const { status } = await requestTrackingPermissionsAsync();
 
@@ -277,6 +279,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
   useEffect(() => {
     requestTracking();
     configureGoogleSignin();
+    initializeFacebookSdk();
     isLoggedIn();
   }, []);
 
