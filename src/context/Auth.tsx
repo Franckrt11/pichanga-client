@@ -1,8 +1,10 @@
+import { Platform } from "react-native";
 import { createContext, useEffect, useContext, useState } from "react";
 import { router, useSegments } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
-// import type { User } from "@react-native-google-signin/google-signin";
+import { requestTrackingPermissionsAsync } from "expo-tracking-transparency";
+import { Settings, LoginManager, AccessToken, AuthenticationToken, Profile } from "react-native-fbsdk-next";
 import { useUserContext } from "./User";
 import {
   fetchLogin,
@@ -10,7 +12,8 @@ import {
   fetchUser,
   fetchNewPassword,
   fetchLogout,
-  fetchGoogleLogin
+  fetchGoogleLogin,
+  fetchFacebookLogin
 } from "@/src/models/Auth";
 import { fetchConfigAll } from "@/src/models/Config";
 import { RegisterUserData, ProviderProps } from "@/src/utils/Types";
@@ -218,11 +221,61 @@ export const AuthProvider = ({ children }: ProviderProps) => {
     }
   };
 
-  const facebookSignIn = async () => {};
+  const facebookSignIn = async () => {
+    try {
+      const fblogin = await LoginManager.logInWithPermissions([
+        "public_profile",
+        "email",
+      ]);
+      console.log("🚀 ~ facebookSignIn ~ fblogin:", fblogin);
+      if (fblogin.isCancelled) {
+        console.log("🚨 ~ facebookSignIn ~ fblogin:Login cancelled");
+      } else {
+        if (Platform.OS === "ios") {
+          const fbToken = await AuthenticationToken.getAuthenticationTokenIOS()
+          if (fbToken) console.log("IOS fbToken", fbToken.authenticationToken);
+        } else {
+          const fbToken = await AccessToken.getCurrentAccessToken();
+          if (fbToken) console.log("ANDROID fbToken", fbToken.accessToken.toString());
+        }
+
+        const currentProfile = await Profile.getCurrentProfile();
+        if (currentProfile) {
+          const response = await fetchFacebookLogin(currentProfile);
+          if (response.status) {
+            setToken(response.token);
+            setUserId(response.user.id.toString());
+            await AsyncStorage.setItem("token", response.token);
+            await AsyncStorage.setItem("userId", response.user.id.toString());
+            dispatch({
+              type: "change",
+              payload: response.user,
+            });
+            await loadConfig(response.token);
+          }
+        }
+      }
+    } catch (error) {
+      console.log("🚩 ~ context/Auth.js ~ facebookSignIn() ~ error:", error);
+    }
+  };
 
   const configureGoogleSignin = () => GoogleSignin.configure();
 
+  const requestTracking = async () => {
+    const { status } = await requestTrackingPermissionsAsync();
+
+    Settings.initializeSDK();
+
+    if (status !== "granted") {
+      console.log("Permission to tracking was denied");
+    } else {
+      await Settings.setAdvertiserTrackingEnabled(true);
+    }
+  };
+
   useEffect(() => {
+    requestTracking();
     configureGoogleSignin();
     isLoggedIn();
   }, []);

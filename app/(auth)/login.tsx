@@ -21,7 +21,7 @@ import Colors from "@/src/utils/Colors";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { signIn, googleSignIn, loading, errors } = useAuthContext();
+  const { signIn, googleSignIn, facebookSignIn, loading, errors } = useAuthContext();
 
   return (
     <SafeAreaView style={LayoutStyles.whiteContainer}>
@@ -120,6 +120,7 @@ const Login = () => {
                 styles.buttonOutline,
                 { flexDirection: "row", justifyContent: "center" },
               ]}
+              onPress={facebookSignIn}
             >
               <FacebookLogo size={20} />
               <Text

@@ -195,3 +195,14 @@ export interface GoogleUser {
   familyName: string | null;
   givenName: string | null;
 }
+
+export interface FacebookUser {
+  userID?: string | null;
+  email?: string | null;
+  name?: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
+  middleName?: string | null;
+  linkURL?: string | null;
+  imageURL?: string | null;
+}

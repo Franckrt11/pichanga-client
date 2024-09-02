@@ -1,6 +1,6 @@
 import * as Device from "expo-device";
 import { API_URL, FETCH_HEADERS } from "@/src/utils/Constants";
-import { RegisterUserData, GoogleUser } from "@/src/utils/Types";
+import { RegisterUserData, GoogleUser, FacebookUser } from "@/src/utils/Types";
 
 export const fetchLogin = async (username: string, password: string) => {
   try {
@@ -111,6 +111,27 @@ export const fetchGoogleLogin = async (user: GoogleUser) => {
     return await response.json();
   } catch (error) {
     console.log("🚩 ~ models/Auth.ts ~ fetchGoogleLogin() ~ error:", error);
+    return { status: false };
+  }
+};
+
+export const fetchFacebookLogin = async (user: FacebookUser) => {
+  try {
+    const response = await fetch(`${API_URL}api/client/facebook-login`, {
+      method: "POST",
+      headers: FETCH_HEADERS,
+      body: JSON.stringify({
+        name: user.firstName,
+        lastname: user.lastName,
+        email: user.email,
+        facebook_id: user.userID,
+        device: Device.brand ? Device.brand : "myweb",
+      }),
+    });
+
+    return await response.json();
+  } catch (error) {
+    console.log("🚩 ~ models/Auth.ts ~ fetchFacebookLogin() ~ error:", error);
     return { status: false };
   }
 };
