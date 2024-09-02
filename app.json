@@ -3,7 +3,7 @@
     "name": "Te Juego una Pichanga",
     "slug": "pichanga-client",
     "owner": "tjupichanga",
-    "version": "0.7.4",
+    "version": "0.8.0",
     "orientation": "portrait",
     "icon": "./src/assets/images/icon.png",
     "scheme": "pichanga",
@@ -21,6 +21,15 @@
       "bundleIdentifier": "com.tjupichanga.client",
       "config": {
         "googleMapsApiKey": "AIzaSyBAay3aE3W70o2clvYt1H2l3XyXLwtPDJQ"
+      },
+      "infoPlist": {
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLSchemes": [
+              "com.googleusercontent.apps.271876292425-nhk2jfd87lpfhou3ts6ejlrl2519vntj"
+            ]
+          }
+        ]
       }
     },
     "android": {
@@ -29,7 +38,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.tjupichanga.client",
-      "versionCode": 15,
+      "versionCode": 16,
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyAkYhZ2IpVeGHOHLtzMhwGn7dDp7EFaIIs"
@@ -56,7 +65,32 @@
           "locationAlwaysAndWhenInUsePermission": "Permitir a $(PRODUCT_NAME) usar tu ubicación."
         }
       ],
-      "expo-font"
+      "expo-font",
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps.271876292425-nhk2jfd87lpfhou3ts6ejlrl2519vntj"
+        }
+      ],
+      [
+        "react-native-fbsdk-next",
+        {
+          "appID": "1882319252206331",
+          "clientToken": "b7debae6d452bd1c94c0fa629c8c780c",
+          "displayName": "Te Juego una Pichanga",
+          "scheme": "fb1882319252206331",
+          "advertiserIDCollectionEnabled": false,
+          "autoLogAppEventsEnabled": false,
+          "isAutoInitEnabled": true,
+          "iosUserTrackingPermission": "Este identificador se utilizará para enviarle anuncios personalizados."
+        }
+      ],
+      [
+        "expo-tracking-transparency",
+        {
+          "userTrackingPermission": "Este identificador se utilizará para enviarle anuncios personalizados."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
@@ -68,5 +102,3 @@
     }
   }
 }
-
-

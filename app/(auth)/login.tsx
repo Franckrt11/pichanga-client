@@ -21,12 +21,10 @@ import Colors from "@/src/utils/Colors";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { signIn, loading, errors } = useAuthContext();
+  const { signIn, googleSignIn, facebookSignIn, loading, errors } = useAuthContext();
 
   return (
-    <SafeAreaView
-      style={LayoutStyles.whiteContainer}
-    >
+    <SafeAreaView style={LayoutStyles.whiteContainer}>
       <Stack.Screen
         options={{
           headerShown: false,
@@ -36,7 +34,12 @@ const Login = () => {
         style={{ paddingTop: 80 }}
         contentContainerStyle={{ alignItems: "center" }}
       >
-        <View style={[LayoutStyles.scrollContainer, { width: "80%", alignItems: "stretch" }]}>
+        <View
+          style={[
+            LayoutStyles.scrollContainer,
+            { width: "80%", alignItems: "stretch" },
+          ]}
+        >
           <View style={{ flex: 1, alignItems: "center", marginBottom: 50 }}>
             <Image style={styles.logo} source={Images.logo} />
           </View>
@@ -72,8 +75,11 @@ const Login = () => {
             )}
 
             <Pressable
-              style={[styles.button, { backgroundColor: Colors.maastrichtBlue, width: "80%" }]}
-              onPress={() => console.log('Login invitado')}
+              style={[
+                styles.button,
+                { backgroundColor: Colors.maastrichtBlue, width: "80%" },
+              ]}
+              onPress={() => console.log("Login invitado")}
             >
               <Text style={styles.buttonText}>Ingresar como INVITADO</Text>
             </Pressable>
@@ -91,13 +97,41 @@ const Login = () => {
 
           <View style={styles.buttonContainer}>
             <Text style={styles.text}>También puedes:</Text>
-            <Pressable style={[styles.buttonOutline, {flexDirection: "row", justifyContent: "center"}]}>
+            <Pressable
+              style={[
+                styles.buttonOutline,
+                { flexDirection: "row", justifyContent: "center" },
+              ]}
+              onPress={googleSignIn}
+            >
               <GoogleLogo size={20} />
-              <Text style={{ color: Colors.maastrichtBlue, fontFamily: "PoppinsMedium", marginLeft: 10 }}>Ingresar con Google</Text>
+              <Text
+                style={{
+                  color: Colors.maastrichtBlue,
+                  fontFamily: "PoppinsMedium",
+                  marginLeft: 10,
+                }}
+              >
+                Ingresar con Google
+              </Text>
             </Pressable>
-            <Pressable style={[styles.buttonOutline, {flexDirection: "row", justifyContent: "center"}]}>
+            <Pressable
+              style={[
+                styles.buttonOutline,
+                { flexDirection: "row", justifyContent: "center" },
+              ]}
+              onPress={facebookSignIn}
+            >
               <FacebookLogo size={20} />
-              <Text style={{ color: Colors.maastrichtBlue, fontFamily: "PoppinsMedium", marginLeft: 10 }}>Ingresar con Facebook</Text>
+              <Text
+                style={{
+                  color: Colors.maastrichtBlue,
+                  fontFamily: "PoppinsMedium",
+                  marginLeft: 10,
+                }}
+              >
+                Ingresar con Facebook
+              </Text>
             </Pressable>
           </View>
         </View>
@@ -111,17 +145,17 @@ export default Login;
 const styles = StyleSheet.create({
   logo: {
     height: 150,
-    width: 140
+    width: 140,
   },
   text: {
     color: Colors.maastrichtBlue,
     fontFamily: "PoppinsMedium",
-    marginBottom: 10
+    marginBottom: 10,
   },
   buttonContainer: {
     width: "100%",
     alignItems: "center",
-    marginBottom: 30
+    marginBottom: 30,
   },
   button: {
     backgroundColor: Colors.metallicGreen,

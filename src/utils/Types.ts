@@ -186,3 +186,23 @@ export interface ReserveData {
   field?: FieldData;
   hour?: HourRange;
 }
+
+export interface GoogleUser {
+  id: string;
+  name: string | null;
+  email: string;
+  photo: string | null;
+  familyName: string | null;
+  givenName: string | null;
+}
+
+export interface FacebookUser {
+  userID?: string | null;
+  email?: string | null;
+  name?: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
+  middleName?: string | null;
+  linkURL?: string | null;
+  imageURL?: string | null;
+}
