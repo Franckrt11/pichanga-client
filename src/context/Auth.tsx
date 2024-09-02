@@ -240,6 +240,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
         }
 
         const currentProfile = await Profile.getCurrentProfile();
+        console.log("🚀 ~ facebookSignIn ~ currentProfile:", currentProfile);
         if (currentProfile) {
           const response = await fetchFacebookLogin(currentProfile);
           if (response.status) {
@@ -260,9 +261,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
     }
   };
 
-  const configureGoogleSignin = () => GoogleSignin.configure();
-
-  const initializeFacebookSdk = () => Settings.initializeSDK();
+  const configureGoogleSignin = async () => GoogleSignin.configure();
 
   const requestTracking = async () => {
     const { status } = await requestTrackingPermissionsAsync();
@@ -279,7 +278,6 @@ export const AuthProvider = ({ children }: ProviderProps) => {
   useEffect(() => {
     requestTracking();
     configureGoogleSignin();
-    initializeFacebookSdk();
     isLoggedIn();
   }, []);
 

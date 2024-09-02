@@ -79,8 +79,8 @@
           "clientToken": "b7debae6d452bd1c94c0fa629c8c780c",
           "displayName": "Te Juego una Pichanga",
           "scheme": "fb1882319252206331",
-          "advertiserIDCollectionEnabled": false,
-          "autoLogAppEventsEnabled": false,
+          "advertiserIDCollectionEnabled": true,
+          "autoLogAppEventsEnabled": true,
           "isAutoInitEnabled": true,
           "iosUserTrackingPermission": "Este identificador se utilizará para enviarle anuncios personalizados."
         }
