@@ -1,6 +1,6 @@
 import * as Device from "expo-device";
 import { API_URL, FETCH_HEADERS } from "@/src/utils/Constants";
-import { RegisterUserData } from "@/src/utils/Types";
+import { RegisterUserData, GoogleUser } from "@/src/utils/Types";
 
 export const fetchLogin = async (username: string, password: string) => {
   try {
@@ -93,3 +93,24 @@ export const fetchLogout = async (token: string | null) => {
     return { status: false };
   }
 }
+
+export const fetchGoogleLogin = async (user: GoogleUser) => {
+  try {
+    const response = await fetch(`${API_URL}api/client/google-login`, {
+      method: "POST",
+      headers: FETCH_HEADERS,
+      body: JSON.stringify({
+        name: user.givenName,
+        lastname: user.familyName,
+        email: user.email,
+        google_id: user.id,
+        device: Device.brand ? Device.brand : "myweb",
+      }),
+    });
+
+    return await response.json();
+  } catch (error) {
+    console.log("🚩 ~ models/Auth.ts ~ fetchGoogleLogin() ~ error:", error);
+    return { status: false };
+  }
+};

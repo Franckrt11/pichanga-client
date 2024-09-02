@@ -6,6 +6,8 @@ export const API_URL = process.env.EXPO_PUBLIC_API_URL;
 export const SOCKET_URL = process.env.EXPO_PUBLIC_SOCKET_URL;
 // export const SOCKET_URL = "http://localhost:3000"
 
+export const GOOGLE_AUTH_ANDROID = process.env.GOOGLE_LOGIN_KEY_ANDROID;
+export const GOOGLE_AUTH_IOS = process.env.GOOGLE_LOGIN_KEY_IOS;
 
 export const FETCH_HEADERS = {
   Accept: "application/json",

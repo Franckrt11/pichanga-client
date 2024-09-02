@@ -1,6 +1,8 @@
 import { createContext, useEffect, useContext, useState } from "react";
 import { router, useSegments } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
+// import type { User } from "@react-native-google-signin/google-signin";
 import { useUserContext } from "./User";
 import {
   fetchLogin,
@@ -8,6 +10,7 @@ import {
   fetchUser,
   fetchNewPassword,
   fetchLogout,
+  fetchGoogleLogin
 } from "@/src/models/Auth";
 import { fetchConfigAll } from "@/src/models/Config";
 import { RegisterUserData, ProviderProps } from "@/src/utils/Types";
@@ -16,6 +19,8 @@ interface IAuthContext {
   signIn: (username: string, password: string) => Promise<void>;
   signOut: () => void;
   signUp: (data: RegisterUserData) => Promise<void>;
+  googleSignIn: () => Promise<void>;
+  facebookSignIn: () => Promise<void>;
   newPassword: (
     email: string,
     oldPassword: string,
@@ -180,7 +185,10 @@ export const AuthProvider = ({ children }: ProviderProps) => {
         } else if (response.message === "Unauthenticated.") {
           unauthenticated();
         } else {
-          console.log("🚩 ~ context/Auth.js ~ isLoggedIn() ~ fetchUser:", response);
+          console.log(
+            "🚩 ~ context/Auth.js ~ isLoggedIn() ~ fetchUser:",
+            response
+          );
         }
       }
     } catch (error) {
@@ -188,7 +196,34 @@ export const AuthProvider = ({ children }: ProviderProps) => {
     }
   };
 
+  const googleSignIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      const response = await fetchGoogleLogin(userInfo.user);
+
+      if (response.status) {
+        setToken(response.token);
+        setUserId(response.user.id.toString());
+        await AsyncStorage.setItem("token", response.token);
+        await AsyncStorage.setItem("userId", response.user.id.toString());
+        dispatch({
+          type: "change",
+          payload: response.user,
+        });
+        await loadConfig(response.token);
+      }
+    } catch (error) {
+      console.log("🚩 ~ context/Auth.js ~ googleSignIn() ~ error:", error);
+    }
+  };
+
+  const facebookSignIn = async () => {};
+
+  const configureGoogleSignin = () => GoogleSignin.configure();
+
   useEffect(() => {
+    configureGoogleSignin();
     isLoggedIn();
   }, []);
 
@@ -200,6 +235,8 @@ export const AuthProvider = ({ children }: ProviderProps) => {
         signIn,
         signOut,
         signUp,
+        googleSignIn,
+        facebookSignIn,
         newPassword,
         token,
         userId,
