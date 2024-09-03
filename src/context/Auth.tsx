@@ -4,7 +4,13 @@ import { router, useSegments } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { requestTrackingPermissionsAsync } from "expo-tracking-transparency";
-import { Settings, LoginManager, AccessToken, AuthenticationToken, Profile } from "react-native-fbsdk-next";
+import {
+  Settings,
+  LoginManager,
+  AccessToken,
+  AuthenticationToken,
+  Profile,
+} from "react-native-fbsdk-next";
 import { useUserContext } from "./User";
 import {
   fetchLogin,
@@ -13,7 +19,7 @@ import {
   fetchNewPassword,
   fetchLogout,
   fetchGoogleLogin,
-  fetchFacebookLogin
+  fetchFacebookLogin,
 } from "@/src/models/Auth";
 import { fetchConfigAll } from "@/src/models/Config";
 import { RegisterUserData, ProviderProps } from "@/src/utils/Types";
@@ -107,6 +113,9 @@ export const AuthProvider = ({ children }: ProviderProps) => {
   const signOut = async () => {
     setLoading(true);
     try {
+      let storageGoogleId = await AsyncStorage.getItem("googleId");
+      let storageFacebookId = await AsyncStorage.getItem("facebookId");
+
       const response = await fetchLogout(token);
       if (response.status) {
         setToken(null);
@@ -114,6 +123,17 @@ export const AuthProvider = ({ children }: ProviderProps) => {
         AsyncStorage.removeItem("token");
         AsyncStorage.removeItem("userId");
         dispatch({ type: "delete" });
+      }
+
+      if (storageGoogleId) {
+        await GoogleSignin.revokeAccess();
+        await GoogleSignin.signOut();
+        AsyncStorage.removeItem("googleId");
+      }
+
+      if (storageFacebookId) {
+        LoginManager.logOut();
+        AsyncStorage.removeItem("facebookId");
       }
 
       if (response.message === "Unauthenticated.") {
@@ -203,18 +223,23 @@ export const AuthProvider = ({ children }: ProviderProps) => {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      const response = await fetchGoogleLogin(userInfo.user);
 
-      if (response.status) {
-        setToken(response.token);
-        setUserId(response.user.id.toString());
-        await AsyncStorage.setItem("token", response.token);
-        await AsyncStorage.setItem("userId", response.user.id.toString());
-        dispatch({
-          type: "change",
-          payload: response.user,
-        });
-        await loadConfig(response.token);
+      if (userInfo) {
+        const response = await fetchGoogleLogin(userInfo.user);
+        if (response.status) {
+          setToken(response.token);
+          setUserId(response.user.id.toString());
+          await AsyncStorage.setItem("token", response.token);
+          await AsyncStorage.setItem("userId", response.user.id.toString());
+          await AsyncStorage.setItem("googleId", userInfo.idToken as string);
+          dispatch({
+            type: "change",
+            payload: response.user,
+          });
+          await loadConfig(response.token);
+        }
+      } else {
+        console.log("🚨 ~ googleSignIn ~ GoogleSignin cancelled");
       }
     } catch (error) {
       console.log("🚩 ~ context/Auth.js ~ googleSignIn() ~ error:", error);
@@ -232,11 +257,17 @@ export const AuthProvider = ({ children }: ProviderProps) => {
         console.log("🚨 ~ facebookSignIn ~ fblogin:Login cancelled");
       } else {
         if (Platform.OS === "ios") {
-          const fbToken = await AuthenticationToken.getAuthenticationTokenIOS()
-          if (fbToken) console.log("IOS fbToken", fbToken.authenticationToken);
+          const fbToken = await AuthenticationToken.getAuthenticationTokenIOS();
+          if (fbToken) {
+            await AsyncStorage.setItem("facebookId", fbToken.authenticationToken);
+            console.log("IOS fbToken", fbToken.authenticationToken);
+          }
         } else {
           const fbToken = await AccessToken.getCurrentAccessToken();
-          if (fbToken) console.log("ANDROID fbToken", fbToken.accessToken.toString());
+          if (fbToken) {
+            await AsyncStorage.setItem("facebookId", fbToken.accessToken.toString());
+            console.log("ANDROID fbToken", fbToken.accessToken.toString());
+          }
         }
 
         const currentProfile = await Profile.getCurrentProfile();
