@@ -223,6 +223,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
+      console.log("🚀 ~ googleSignIn ~ userInfo:", userInfo);
 
       if (userInfo) {
         const response = await fetchGoogleLogin(userInfo.user);
